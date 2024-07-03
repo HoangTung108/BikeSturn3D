@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Street
+  - Grass
+  - Stone
+  - pelvis
+  - checkpoint
+  - complete
+  - FinishCol
+  - failed
+  - nospush
+  - point
+  - rampstart
+  - rampCam
+  - rampBike3
+  - rampstop
+  - rampBike1
+  - rampBike2
+  - rampBike4
+  - Junction
+  - BikeFall
+  - P1
+  - P2
+  - TargetDis
+  - RaceFinish
+  - TargetDis1
+  - TargetDis2
+  - checkdis
+  - floorcrash
+  - BallShootTag
+  - BikeFallStay
+  - Ground
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - Post Process
+  - lyer8
+  - lyer9
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - P0
+  - P1
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

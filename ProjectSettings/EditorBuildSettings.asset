@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SplashScene.unity
+    guid: 8728fdf009a99504c8f0ee2ad5464bd6
+  - enabled: 1
+    path: Assets/Scenes/MenuBike.unity
+    guid: 6a4821cb50f8f144090ef7439b9c46c2
+  - enabled: 1
+    path: Assets/Scenes/First5Levels/BikeStuntLevel_001.unity
+    guid: ddf82a6c9ef79a74b845ce5fd45a8133
+  - enabled: 1
+    path: Assets/Scenes/First5Levels/BikeStuntLevel_002.unity
+    guid: a4f309c39cba43d44b61b2c51f6107e7
+  - enabled: 1
+    path: Assets/Scenes/First5Levels/BikeStuntLevel_003.unity
+    guid: e79f285d90767314381952e128052a18
+  - enabled: 1
+    path: Assets/Scenes/First5Levels/BikeStuntLevel_004.unity
+    guid: c0aef853152f2804ebcecbd7a8f13515
+  - enabled: 1
+    path: Assets/Scenes/First5Levels/BikeStuntLevel_005.unity
+    guid: 5852693004d782247b3da10066a0dca4
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_1.unity
+    guid: 1aa749daf3021124fa230fd06b0e9617
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_02.unity
+    guid: 294df977bec11dc4faeed35c161770fb
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_3.unity
+    guid: 19cd71bb015270f41a44e66938f14690
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_4.unity
+    guid: 6c45a877bbc0b71449af5daa485818a1
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_5.unity
+    guid: 83dd48495e0694e42bc94c86e5f50400
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_6.unity
+    guid: ead2247d9d50d594d81c14efb210bc0a
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_7.unity
+    guid: 7da4d78ae5ab00441841c4c855adcc9a
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_8.unity
+    guid: f905c2aa60479df43bf5cf4853f43c38
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_9.unity
+    guid: 4c5622696155a8b48897f28cc14db573
+  - enabled: 1
+    path: Assets/Scenes/BikeStuntLevel_10.unity
+    guid: ceddf52cd63bbf44e930e8ad9a9cf3c4
+  - enabled: 1
+    path: Assets/Scenes/CityLevels/CityBikeStuntLevel_01.unity
+    guid: c89c52200a17b3e45bf4c79ca28d1694
+  - enabled: 1
+    path: Assets/Scenes/CityLevels/CityBikeStuntLevel_02.unity
+    guid: af07bca34a9939f47a1e0c8706ab8ba1
+  - enabled: 1
+    path: Assets/Scenes/CityLevels/CityBikeStuntLevel_03.unity
+    guid: 31b25e8dd35f6c24a9081b5ab3085f14
+  - enabled: 1
+    path: Assets/Scenes/CityLevels/CityBikeStuntLevel_04.unity
+    guid: 00dc7d2fd18e32a4d9b359533b848be1
+  - enabled: 1
+    path: Assets/Scenes/CityLevels/CityBikeStuntLevel_05.unity
+    guid: 30aec2092ee16b64ba823dd2441d29dd
+  - enabled: 0
+    path: Assets/Scenes/Menu/PhotonLobby.unity
+    guid: f986a89338961bb4ea1efea0fcb4c87d
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_1_Net.unity
+    guid: 3ff1f84c4b5b8df4fa7a965f96280e54
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_2_Net.unity
+    guid: 9146490a20a00254f81569a3bd21ed7f
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_3_Net.unity
+    guid: cfed43c5d18b27e44b59d15f22bb3576
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_4_Net.unity
+    guid: 7e1642276f1fd504da24be6cd1e7ae7f
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_5_Net.unity
+    guid: c713c8fc267b4f44392c2031ed7ed368
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_6_Net.unity
+    guid: 32859f4742537144c8a17b9f5c1c7a42
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_7_Net.unity
+    guid: 5baee9f95a3f8df459b8ddf5a37c6782
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_8_Net.unity
+    guid: f6a09860ffd9f1b40a178bcd2003f61d
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/MultiplayerBikeStuntLevel_9_Net.unity
+    guid: 84783c4b55e819e4eb0abb35b29a7662
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: bdc32313bc6d3bf4aa9f1eb2ad007312,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b1ebaa3119e456c4ea4d9fe2cba94145,
+      type: 2}
