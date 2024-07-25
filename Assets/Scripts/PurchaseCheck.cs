@@ -10,10 +10,6 @@ public class PurchaseCheck : MonoBehaviour
 
 	public GameObject UnlockAllBikesPurchaseObj;
 
-	public GameObject StarterKitPurchaseObj;
-
-	public GameObject CoinsOfferPackPurchaseObj;
-
 	public GameObject StoreObj;
 
 	public GameObject StoreNotAvailbleObj;
@@ -22,30 +18,13 @@ public class PurchaseCheck : MonoBehaviour
 
 	public GameObject UnlockAllLevelsMenuBTn;
 
-	public GameObject FreeCoinsBTn;
-
 	private void Start()
 	{
 		if (Application.internetReachability != 0)
 		{
 			Debug.Log("Internet Available");
 			StoreObj.SetActive(true);
-			if ( SplashScript.BikeSix.ValueData ==0 && PlayerPrefs.GetInt("NoAdsPurchase") == 0)
-			{
-				StarterKitPurchaseObj.SetActive(true);
-			}
-			else if (SplashScript.BikeSix.ValueData ==1  && PlayerPrefs.GetInt("NoAdsPurchase") == 1)
-			{
-				StarterKitPurchaseObj.SetActive(false);
-			}
-			if (PlayerPrefs.GetInt("CoinsOfferPurchase") == 1)
-			{
-				CoinsOfferPackPurchaseObj.SetActive(false);
-			}
-			else
-			{
-				CoinsOfferPackPurchaseObj.SetActive(true);
-			}
+		
 			StoreNotAvailbleObj.SetActive(false);
 			if (PlayerPrefs.GetInt("NoAdsPurchase") == 1)
 			{
@@ -79,15 +58,14 @@ public class PurchaseCheck : MonoBehaviour
 			{
 				UnlockAllBikesPurchaseObj.SetActive(false);
 			}
-			FreeCoinsBTn.SetActive(true);
+		
 		}
 		else
 		{
-			StarterKitPurchaseObj.SetActive(false);
-			CoinsOfferPackPurchaseObj.SetActive(false);
+		
 			StoreNotAvailbleObj.SetActive(true);
 			StoreObj.SetActive(false);
-			FreeCoinsBTn.SetActive(false);
+		
 		}
 	}
 

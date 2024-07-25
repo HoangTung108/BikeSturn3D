@@ -21,8 +21,6 @@ public class BikeUIController : MonoBehaviour
 
 	public GameObject[] CheckpointObj;
 
-	public GameObject NextSkipBtn;
-
 	public Text TimeShow;
 
 	public float timer;
@@ -306,8 +304,6 @@ public class BikeUIController : MonoBehaviour
 				InsBike = UnityEngine.Object.Instantiate(Bike11, Spwanpoints[0].transform.position, Spwanpoints[0].transform.rotation);
 			}
 		}
-		if (PlayerPrefs.GetInt("MultiPlyerGameDB") == 0)
-		{
 			if (PlayerPrefs.GetInt("BikeSelDB") == 1 && Application.loadedLevel > 4)
 			{
 				UpgradeBtn.SetActive(true);
@@ -324,7 +320,11 @@ public class BikeUIController : MonoBehaviour
 			{
 				UpgradeBtn.SetActive(true);
 			}
-		}
+			else 
+			{
+				UpgradeBtn.SetActive(false);
+			}
+		
 	}
 
 	private void Start()
@@ -332,6 +332,7 @@ public class BikeUIController : MonoBehaviour
 		Time.timeScale = 1f;
 		Invoke("InitControls", 1.2f);
 		PlayerPrefs.SetInt("RespawnAdCallDB", 0);
+
 	}
 
 	private void InitControls()
@@ -346,23 +347,19 @@ public class BikeUIController : MonoBehaviour
 		PlayerPrefs.SetInt("SelTutDB", 1);
 		if (PlayerPrefs.GetInt("MultiPlyerGameDB") == 0)
 		{
-			if (PlayerPrefs.GetInt("trainDb") == 0)
-			{
-				if (Application.loadedLevel == 2 && TrainingPanel != null)
+			if (Application.loadedLevel == 2 && TrainingPanel != null)
 				{
 					TrainingPanel.SetActive(true);
 				}
-				PlayerPrefs.SetInt("trainDb", 1);
-			}
-			else if (PlayerPrefs.GetInt("trainDb") == 1)
-			{
-				if (Application.loadedLevel == 3 && TrainingPanel != null)
+	
+			
+			if (Application.loadedLevel == 3 && TrainingPanel != null)
 				{
 					TrainingPanel.SetActive(true);
 				}
-				PlayerPrefs.SetInt("trainDb", 2);
-			}
-			if (PauseBTN == null)
+				
+		}
+		if (PauseBTN == null)
 			{
 				PauseBTN = GameObject.Find("BikeCanvas/Pause");
 			}
@@ -372,7 +369,6 @@ public class BikeUIController : MonoBehaviour
 			BikerMan = GameObject.FindGameObjectWithTag("pelvis").transform;
 			BikerMan = bikeScript.bikeSetting.bikerMan;
 			bikeScript.activeControl = true;
-		}
 		minutes = 0;
 		seconds = 0;
 		fraction = 0;
@@ -440,24 +436,7 @@ public class BikeUIController : MonoBehaviour
 		{
 			return;
 		}
-		if (Application.loadedLevel > 15 && Application.loadedLevel <= 19)
-		{
-			if (bikeScript.CheckpointCounter == 3)
-			{
-				NextSkipBtn.SetActive(false);
-			}
-		}
-		else if (Application.loadedLevel == 20)
-		{
-			if (bikeScript.CheckpointCounter == 2)
-			{
-				NextSkipBtn.SetActive(false);
-			}
-		}
-		else if (bikeScript.CheckpointCounter == 4)
-		{
-			NextSkipBtn.SetActive(false);
-		}
+	
 		if (PlayerPrefs.GetInt("RewardWacthed") == 1)
 		{
 			Analytics.CustomEvent("RewardAdWatchedSuccess");
@@ -566,6 +545,7 @@ public class BikeUIController : MonoBehaviour
 			}
 			ParachuteControls.SetActive(false);
 			LevelFailedPanel.SetActive(true);
+			
 			Time.timeScale = 0f;
 			if (PlayerPrefs.GetInt("ModeDB") == 0)
 			{
@@ -666,6 +646,8 @@ public class BikeUIController : MonoBehaviour
 		LevelCompletePanel.SetActive(true);
 		if (PlayerPrefs.GetInt("ModeDB") == 0)
 		{
+			
+			
 			if (PlayerPrefs.GetInt("DoubleCoinsPurcahsed") == 1)
 			{
 				PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") + 1000);
@@ -778,79 +760,79 @@ public class BikeUIController : MonoBehaviour
 			}
 			if (Application.loadedLevel == 2)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel2", 1);
+				SplashScript.TUnlocked_level2.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 3)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel3", 1);
+				SplashScript.TUnlocked_level3.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 4)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel4", 1);
+				SplashScript.TUnlocked_level4.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 5)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel5", 1);
+				SplashScript.TUnlocked_level5.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 6)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel6", 1);
+				SplashScript.TUnlocked_level6.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 7)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel7", 1);
+				SplashScript.TUnlocked_level7.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 8)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel8", 1);
+				SplashScript.TUnlocked_level8.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 9)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel9", 1);
+				SplashScript.TUnlocked_level9.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 10)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel10", 1);
+				SplashScript.TUnlocked_level10.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 11)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel11", 1);
+				SplashScript.TUnlocked_level11.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 12)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel12", 1);
+				SplashScript.TUnlocked_level12.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 13)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel13", 1);
+				SplashScript.TUnlocked_level13.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 14)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel14", 1);
+				SplashScript.TUnlocked_level14.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 15)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel15", 1);
+				SplashScript.TUnlocked_level15.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 16)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel16", 1);
+				SplashScript.TUnlocked_level16.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 17)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel17", 1);
+				SplashScript.TUnlocked_level17.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 18)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel18", 1);
+				SplashScript.TUnlocked_level18.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 19)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel19", 1);
+				SplashScript.TUnlocked_level19.ValueData = 1;
 			}
 			else if (Application.loadedLevel == 20)
 			{
-				PlayerPrefs.SetInt("TUnlockedLevel20", 1);
+				SplashScript.TUnlocked_level20.ValueData = 1;
 			}
 			CashText.text = "+ 1000";
 			int num3 = Application.loadedLevel - 1;

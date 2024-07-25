@@ -66,6 +66,44 @@ public class SplashScript : MonoBehaviour
 
 	public static StorageData FUnlocked_level20;
 
+	public static StorageData TUnlocked_level2;
+
+	public static StorageData TUnlocked_level3;
+
+	public static StorageData TUnlocked_level4;
+
+	public static StorageData TUnlocked_level5;
+
+	public static StorageData TUnlocked_level6;
+
+	public static StorageData TUnlocked_level7;
+
+	public static StorageData TUnlocked_level8;
+
+	public static StorageData TUnlocked_level9;
+
+	public static StorageData TUnlocked_level10;
+
+	public static StorageData TUnlocked_level11;
+
+	public static StorageData TUnlocked_level12;
+
+	public static StorageData TUnlocked_level13;
+
+	public static StorageData TUnlocked_level14;
+	
+	public static StorageData TUnlocked_level15;
+
+	public static StorageData TUnlocked_level16;
+
+	public static StorageData TUnlocked_level17;
+
+	public static StorageData TUnlocked_level18;
+
+	public static StorageData TUnlocked_level19;
+
+	public static StorageData TUnlocked_level20;
+
 	public static string datapath;
 
 	public static StreamData db_value;
@@ -94,6 +132,25 @@ public class SplashScript : MonoBehaviour
 		FUnlocked_level18 = new StorageData();
 		FUnlocked_level19 = new StorageData();
 		FUnlocked_level20 = new StorageData();
+		TUnlocked_level2 = new StorageData();
+		TUnlocked_level3 = new StorageData();
+		TUnlocked_level4 = new StorageData();
+		TUnlocked_level5 = new StorageData();
+		TUnlocked_level6 = new StorageData();
+		TUnlocked_level7 = new StorageData();
+		TUnlocked_level8 = new StorageData();
+		TUnlocked_level9 = new StorageData();
+		TUnlocked_level10 = new StorageData();
+		TUnlocked_level11 = new StorageData();
+		TUnlocked_level12 = new StorageData();
+		TUnlocked_level13 = new StorageData();
+		TUnlocked_level14 = new StorageData();
+		TUnlocked_level15 = new StorageData();
+		TUnlocked_level16 = new StorageData();
+		TUnlocked_level17 = new StorageData();
+		TUnlocked_level18 = new StorageData();
+		TUnlocked_level19 = new StorageData();
+		TUnlocked_level20 = new StorageData();
 		BikeTwo = new StorageData();
 		BikeThree = new StorageData();
 		BikeFour = new StorageData();
@@ -129,6 +186,25 @@ public class SplashScript : MonoBehaviour
 		FUnlocked_level18 = db_value.DataVal[16];
 		FUnlocked_level19 = db_value.DataVal[17];
 		FUnlocked_level20 = db_value.DataVal[18];
+		TUnlocked_level2 = db_value.DataTime[0];
+		TUnlocked_level3 = db_value.DataTime[1];
+		TUnlocked_level4 = db_value.DataTime[2];
+		TUnlocked_level5 = db_value.DataTime[3];
+		TUnlocked_level6 = db_value.DataTime[4];
+		TUnlocked_level7 = db_value.DataTime[5];
+		TUnlocked_level8 = db_value.DataTime[6];
+		TUnlocked_level9 = db_value.DataTime[7];
+		TUnlocked_level10 = db_value.DataTime[8];
+		TUnlocked_level11 = db_value.DataTime[9];
+		TUnlocked_level12 = db_value.DataTime[10];
+		TUnlocked_level13 = db_value.DataTime[11];
+		TUnlocked_level14 = db_value.DataTime[12];
+		TUnlocked_level15 = db_value.DataTime[13];
+		TUnlocked_level16 = db_value.DataTime[14];
+		TUnlocked_level17 = db_value.DataTime[15];
+		TUnlocked_level18 = db_value.DataTime[16];
+		TUnlocked_level19 = db_value.DataTime[17];
+		TUnlocked_level20 = db_value.DataTime[18];
 		BikeTwo = db_value.BikeData[0];
 		BikeThree = db_value.BikeData[1];
 		BikeFour = db_value.BikeData[2];

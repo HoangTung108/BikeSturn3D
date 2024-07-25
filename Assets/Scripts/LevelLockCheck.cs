@@ -240,7 +240,7 @@ public class LevelLockCheck : MonoBehaviour
 		}
 		else if (PlayerPrefs.GetInt("ModeDB") == 1)
 		{
-			if (PlayerPrefs.GetInt("TUnlockedLevel2") == 1)
+			if (SplashScript.TUnlocked_level2.ValueData == 1)
 			{
 				TLockLevel2.SetActive(false);
 			}
@@ -248,7 +248,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel2.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel3") == 1)
+			if (SplashScript.TUnlocked_level3.ValueData == 1)
 			{
 				TLockLevel3.SetActive(false);
 			}
@@ -256,7 +256,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel3.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel4") == 1)
+			if (SplashScript.TUnlocked_level4.ValueData == 1)
 			{
 				TLockLevel4.SetActive(false);
 			}
@@ -264,7 +264,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel4.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel5") == 1)
+			if (SplashScript.TUnlocked_level5.ValueData == 1)
 			{
 				TLockLevel5.SetActive(false);
 			}
@@ -272,7 +272,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel5.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel6") == 1)
+			if (SplashScript.TUnlocked_level6.ValueData == 1)
 			{
 				TLockLevel6.SetActive(false);
 			}
@@ -280,7 +280,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel6.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel7") == 1)
+			if (SplashScript.TUnlocked_level7.ValueData == 1)
 			{
 				TLockLevel7.SetActive(false);
 			}
@@ -288,7 +288,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel7.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel8") == 1)
+			if (SplashScript.TUnlocked_level8.ValueData == 1)
 			{
 				TLockLevel8.SetActive(false);
 			}
@@ -296,7 +296,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel8.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel9") == 1)
+			if (SplashScript.TUnlocked_level9.ValueData == 1)
 			{
 				TLockLevel9.SetActive(false);
 			}
@@ -304,7 +304,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel9.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel10") == 1)
+			if (SplashScript.TUnlocked_level10.ValueData == 1)
 			{
 				TLockLevel10.SetActive(false);
 			}
@@ -312,7 +312,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel10.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel11") == 1)
+			if (SplashScript.TUnlocked_level11.ValueData == 1)
 			{
 				TLockLevel11.SetActive(false);
 			}
@@ -320,7 +320,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel11.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel12") == 1)
+			if (SplashScript.TUnlocked_level12.ValueData == 1)
 			{
 				TLockLevel12.SetActive(false);
 			}
@@ -328,7 +328,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel12.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel13") == 1)
+			if (SplashScript.TUnlocked_level13.ValueData == 1)
 			{
 				TLockLevel13.SetActive(false);
 			}
@@ -336,7 +336,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel13.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel14") == 1)
+			if (SplashScript.TUnlocked_level14.ValueData == 1)
 			{
 				TLockLevel14.SetActive(false);
 			}
@@ -344,7 +344,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel14.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel15") == 1)
+			if( SplashScript.TUnlocked_level15.ValueData == 1)
 			{
 				TLockLevel15.SetActive(false);
 			}
@@ -352,7 +352,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel15.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel16") == 1)
+			if (SplashScript.TUnlocked_level16.ValueData == 1)
 			{
 				TLockLevel16.SetActive(false);
 			}
@@ -360,7 +360,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel16.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel17") == 1)
+			if (SplashScript.TUnlocked_level17.ValueData == 1)
 			{
 				TLockLevel17.SetActive(false);
 			}
@@ -368,7 +368,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel17.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel18") == 1)
+			if (SplashScript.TUnlocked_level18.ValueData == 1)
 			{
 				TLockLevel18.SetActive(false);
 			}
@@ -376,7 +376,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel18.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel19") == 1)
+			if (SplashScript.TUnlocked_level19.ValueData == 1)
 			{
 				TLockLevel19.SetActive(false);
 			}
@@ -384,7 +384,7 @@ public class LevelLockCheck : MonoBehaviour
 			{
 				TLockLevel19.SetActive(true);
 			}
-			if (PlayerPrefs.GetInt("TUnlockedLevel20") == 1)
+			if (SplashScript.TUnlocked_level20.ValueData == 1)
 			{
 				TLockLevel20.SetActive(false);
 			}

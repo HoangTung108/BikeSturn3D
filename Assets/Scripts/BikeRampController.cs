@@ -5,8 +5,6 @@ public class BikeRampController : MonoBehaviour
 {
 	private GameObject RampBike;
 
-	public GameObject RampBike1;
-
 	public GameObject RampBike2;
 
 	public GameObject RampBike3;
@@ -37,8 +35,6 @@ public class BikeRampController : MonoBehaviour
 
 	private BikeRampAI BikeRampAIScript;
 
-	public BikeRampAI BikeRampAIScript1;
-
 	public BikeRampAI BikeRampAIScript2;
 
 	public BikeRampAI BikeRampAIScript3;
@@ -60,8 +56,6 @@ public class BikeRampController : MonoBehaviour
 	public BikeRampAI BikeRampAIScript11;
 
 	private SplineController splineControllerScript;
-
-	public SplineController splineControllerScript1;
 
 	public SplineController splineControllerScript2;
 
@@ -101,13 +95,8 @@ public class BikeRampController : MonoBehaviour
 	{
 		PlayerBike = GameObject.FindGameObjectWithTag("Player");
 		BikeControlScript = Object.FindObjectOfType<BikeControl>();
-		if (PlayerPrefs.GetInt("BikeSelDB") == 1)
-		{
-			BikeRampAIScript = BikeRampAIScript1;
-			RampBike = RampBike1;
-			splineControllerScript = splineControllerScript1;
-		}
-		else if (PlayerPrefs.GetInt("BikeSelDB") == 2)
+	
+	 	if (PlayerPrefs.GetInt("BikeSelDB") == 2)
 		{
 			BikeRampAIScript = BikeRampAIScript2;
 			RampBike = RampBike2;
@@ -204,7 +193,6 @@ public class BikeRampController : MonoBehaviour
 				PlayerBike.gameObject.SetActive(false);
 				BikeControlScript.rampStart = false;
 			}
-			Debug.Log("Bool Junc:" + BikeControlScript.junctionBool);
 		}
 		if (BikeRampAIScript != null && BikeRampAIScript.rampStop)
 		{

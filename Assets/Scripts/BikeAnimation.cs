@@ -392,11 +392,11 @@ public class BikeAnimation : MonoBehaviour
 					animator.SetIKPosition(AvatarIKGoal.RightFoot, IKPoints.rightFoot.position);
 					animator.SetIKRotation(AvatarIKGoal.RightFoot, IKPoints.rightFoot.rotation);
 				}
-				if (IKPoints.leftFoot != null && BikeScript.speed > 30f)
-				{
-					animator.SetIKPosition(AvatarIKGoal.LeftFoot, IKPoints.leftFoot.position);
-					animator.SetIKRotation(AvatarIKGoal.LeftFoot, IKPoints.leftFoot.rotation);
-				}
+				// if (IKPoints.leftFoot != null && BikeScript.speed > 30f)
+				// {
+				// 	animator.SetIKPosition(AvatarIKGoal.LeftFoot, IKPoints.leftFoot.position);
+				// 	animator.SetIKRotation(AvatarIKGoal.LeftFoot, IKPoints.leftFoot.rotation);
+				// }
 			}
 		}
 		else

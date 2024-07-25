@@ -10,6 +10,7 @@ public class StreamData
 
     public List <StorageData> BikeData;
 
+    public List<StorageData> DataTime;
     
 }
 
