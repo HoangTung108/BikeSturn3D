@@ -10,6 +10,8 @@ public class BikeUIController : MonoBehaviour
 	[Serializable]
 	public class BikeUIClass
 	{
+		public Image Speed;
+
 		public Image tachometerNeedle;
 
 		public Image barShiftGUI;
@@ -99,6 +101,8 @@ public class BikeUIController : MonoBehaviour
 
 	private float thisAngle = -150f;
 
+	private float angle = 0f;
+
 	private float restTime;
 
 	public Rigidbody myRigidbody;
@@ -133,6 +137,7 @@ public class BikeUIController : MonoBehaviour
 
 	public GameObject RateUsDialogue;
 
+	public static GameObject CheckPoint;
 	private int PLValue;
 
 	private bool InitBool;
@@ -193,7 +198,7 @@ public class BikeUIController : MonoBehaviour
 			Invoke("delayUnpauseCall", 0.2f);
 			restTime = 2f;
 		}
-		if (Application.loadedLevel > 2)
+		if (PlayerPrefs.GetInt("LevelLoad") > 2)
 		{
 			if (PlayerPrefs.GetInt("RespawnAdCallDB") >= 5)
 			{
@@ -249,14 +254,92 @@ public class BikeUIController : MonoBehaviour
 			BikeUI.GearText.color = Color.red;
 			BikeUI.GearText.text = "R";
 		}
-		thisAngle = bikeScript.motorRPM / 20f - 175f;
-		thisAngle = Mathf.Clamp(thisAngle, -180f, 90f);
-		BikeUI.tachometerNeedle.rectTransform.rotation = Quaternion.Euler(0f, 0f, 0f - thisAngle);
+		thisAngle = bikeScript.speed ;
+		angle =  (-135f + thisAngle*2.5f +180f)/360f;
+		
+		BikeUI.tachometerNeedle.rectTransform.rotation = bikeScript.speed <=110 ? Quaternion.Euler(0f, 0f, 135f - thisAngle*2.5f ) : Quaternion.Euler(0f,0f, 230f);
+		
+
 		BikeUI.barShiftGUI.fillAmount = bikeScript.powerShift / 100f;
+		BikeUI.Speed.fillAmount = angle ;
 	}
 
 	private void Awake()
 	{
+		QualitySettings.vSyncCount = 0; 
+        Application.targetFrameRate = 120;
+		int Level = PlayerPrefs.GetInt("LevelLoad");
+	 	CheckPoint = GameObject.Find("CheckPointText");
+		switch(Level)
+		{
+			case 1:
+			GameObject mapObj1 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel1") as GameObject) as GameObject;
+			break;
+			case 2:
+			GameObject mapObj2 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel2") as GameObject) as GameObject;
+			break;
+			case 3:
+			GameObject mapOb3 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel3") as GameObject) as GameObject;
+			break;
+			case 4:
+			GameObject mapObj4 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel4") as GameObject) as GameObject;
+			break;
+			case 5:
+			GameObject mapObj5 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel5") as GameObject) as GameObject;
+			break;
+			case 6:
+			GameObject mapObj6 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel6") as GameObject) as GameObject;
+			break;
+			case 7:
+			GameObject mapObj7 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel7") as GameObject) as GameObject;
+			break;
+			case 8:
+			GameObject mapObj8 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel8") as GameObject) as GameObject;
+			break;
+			case 9:
+			GameObject mapObj9 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel9") as GameObject) as GameObject;
+			break;
+			case 10:
+			GameObject mapObj10 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel10") as GameObject) as GameObject;
+			break;
+			case 11:
+			GameObject mapObj11 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel11") as GameObject) as GameObject;
+			break;
+			case 12:
+			GameObject mapObj12 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel12") as GameObject) as GameObject;
+			break;
+			case 13:
+			GameObject mapObj13 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel13") as GameObject) as GameObject;
+			break;
+			case 14:
+			GameObject mapObj14 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel14") as GameObject) as GameObject;
+			break;
+			case 15:
+			GameObject mapObj15 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel15") as GameObject) as GameObject;
+			break;
+			case 16:
+			GameObject mapObj16 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel16") as GameObject) as GameObject;
+			break;
+			case 17:
+			GameObject mapObj17 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel17") as GameObject) as GameObject;
+			break;
+			case 18:
+			GameObject mapObj18 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel18") as GameObject) as GameObject;
+			break;
+			case 19:
+			GameObject mapObj19 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel19") as GameObject) as GameObject;
+			break;
+			case 20:
+			GameObject mapObj20 = UnityEngine.Object.Instantiate(Resources.Load("MapLevel20") as GameObject) as GameObject;
+			break;
+		}
+		
+		Resources.UnloadUnusedAssets();
+		for (int i =0; i <Spwanpoints.Length; i++)
+		{
+			Spwanpoints[i] = GameObject.Find(string.Format("Point{0}",i+1)).transform;
+		}
+	
 		if (PlayerPrefs.GetInt("MultiPlyerGameDB") == 0)
 		{
 			if (PlayerPrefs.GetInt("BikeSelDB") == 1)
@@ -304,19 +387,19 @@ public class BikeUIController : MonoBehaviour
 				InsBike = UnityEngine.Object.Instantiate(Bike11, Spwanpoints[0].transform.position, Spwanpoints[0].transform.rotation);
 			}
 		}
-			if (PlayerPrefs.GetInt("BikeSelDB") == 1 && Application.loadedLevel > 4)
+			if (PlayerPrefs.GetInt("BikeSelDB") == 1 && PlayerPrefs.GetInt("LevelLoad") > 4)
 			{
 				UpgradeBtn.SetActive(true);
 			}
-			else if (PlayerPrefs.GetInt("BikeSelDB") == 2 && Application.loadedLevel > 8)
+			else if (PlayerPrefs.GetInt("BikeSelDB") == 2 && PlayerPrefs.GetInt("LevelLoad") > 8)
 			{
 				UpgradeBtn.SetActive(true);
 			}
-			else if (PlayerPrefs.GetInt("BikeSelDB") == 3 && Application.loadedLevel > 12)
+			else if (PlayerPrefs.GetInt("BikeSelDB") == 3 && PlayerPrefs.GetInt("LevelLoad") > 12)
 			{
 				UpgradeBtn.SetActive(true);
 			}
-			else if (PlayerPrefs.GetInt("BikeSelDB") == 4 && Application.loadedLevel > 15)
+			else if (PlayerPrefs.GetInt("BikeSelDB") == 4 && PlayerPrefs.GetInt("LevelLoad") > 15)
 			{
 				UpgradeBtn.SetActive(true);
 			}
@@ -324,6 +407,7 @@ public class BikeUIController : MonoBehaviour
 			{
 				UpgradeBtn.SetActive(false);
 			}
+
 		
 	}
 
@@ -347,13 +431,13 @@ public class BikeUIController : MonoBehaviour
 		PlayerPrefs.SetInt("SelTutDB", 1);
 		if (PlayerPrefs.GetInt("MultiPlyerGameDB") == 0)
 		{
-			if (Application.loadedLevel == 2 && TrainingPanel != null)
+			if (PlayerPrefs.GetInt("LevelLoad") == 2 && TrainingPanel != null)
 				{
 					TrainingPanel.SetActive(true);
 				}
 	
 			
-			if (Application.loadedLevel == 3 && TrainingPanel != null)
+			if (PlayerPrefs.GetInt("LevelLoad") == 3 && TrainingPanel != null)
 				{
 					TrainingPanel.SetActive(true);
 				}
@@ -373,22 +457,23 @@ public class BikeUIController : MonoBehaviour
 		seconds = 0;
 		fraction = 0;
 		BikeAnimationScript = UnityEngine.Object.FindObjectOfType<BikeAnimation>();
+		BikeUI.Speed = GameObject.Find("BikeCanvas/Tachometer/Image").GetComponent<Image>();
 		BikeUI.tachometerNeedle = GameObject.Find("BikeCanvas/Tachometer/Needle").GetComponent<Image>();
 		BikeUI.barShiftGUI = GameObject.Find("BikeCanvas/CarShiftUI/Bar").GetComponent<Image>();
-		BikeUI.speedText = GameObject.Find("BikeCanvas/Tachometer/Speed").GetComponent<Text>();
-		BikeUI.GearText = GameObject.Find("BikeCanvas/Tachometer/Gear").GetComponent<Text>();
+		BikeUI.speedText = GameObject.Find("BikeCanvas/Tachometer/Speed/SpeedText").GetComponent<Text>();
+		BikeUI.GearText = GameObject.Find("BikeCanvas/Tachometer/Speed/Gear").GetComponent<Text>();
 		if (PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			TimeShow = GameObject.Find("BikeCanvas/Control/Timer/TimerText").GetComponent<Text>();
-			if (Application.loadedLevel > 1 && Application.loadedLevel <= 3)
+			if (PlayerPrefs.GetInt("LevelLoad")> 1 && PlayerPrefs.GetInt("LevelLoad") <= 3)
 			{
 				timer = 360f;
 			}
-			else if (Application.loadedLevel > 3 && Application.loadedLevel <= 6)
+			else if (PlayerPrefs.GetInt("LevelLoad") > 3 && PlayerPrefs.GetInt("LevelLoad") <= 6)
 			{
 				timer = 300f;
 			}
-			else if (Application.loadedLevel > 6 && Application.loadedLevel <= 21)
+			else if (PlayerPrefs.GetInt("LevelLoad") > 6 && PlayerPrefs.GetInt("LevelLoad") <= 21)
 			{
 				timer = 240f;
 			}
@@ -400,7 +485,7 @@ public class BikeUIController : MonoBehaviour
 		}
 		if (PlayerPrefs.GetInt("ModeDB") == 0)
 		{
-			int num = Application.loadedLevel - 1;
+			int num = PlayerPrefs.GetInt("LevelLoad") - 1;
 			string customEventName = "level_start" + num;
 			Dictionary<string, object> dictionary = new Dictionary<string, object>();
 			dictionary.Add("Level_Num", num);
@@ -408,7 +493,7 @@ public class BikeUIController : MonoBehaviour
 		}
 		else if (PlayerPrefs.GetInt("ModeDB") == 1)
 		{
-			int num2 = Application.loadedLevel - 1;
+			int num2 = PlayerPrefs.GetInt("LevelLoad") - 1;
 			string customEventName2 = "Time_level_start" + num2;
 			Dictionary<string, object> dictionary = new Dictionary<string, object>();
 			dictionary.Add("TimeLevel_Num", num2);
@@ -469,13 +554,13 @@ public class BikeUIController : MonoBehaviour
 			else if (LevelFailedBool)
 			{
 				Analytics.CustomEvent("WantRewardAdbutFailed");
-				if (Application.loadedLevel > 2)
+				if (PlayerPrefs.GetInt("LevelLoad") > 2)
 				{
 					PlayerPrefs.SetInt("LvlFailedAdCallDB", 1);
 				}
 				if (PlayerPrefs.GetInt("ModeDB") == 0)
 				{
-					int num = Application.loadedLevel - 1;
+					int num = PlayerPrefs.GetInt("LevelLoad") - 1;
 					string customEventName = "level_failed" + num;
 					Dictionary<string, object> dictionary = new Dictionary<string, object>();
 					dictionary.Add("Level_Num", num);
@@ -483,7 +568,7 @@ public class BikeUIController : MonoBehaviour
 				}
 				else if (PlayerPrefs.GetInt("ModeDB") == 1)
 				{
-					int num2 = Application.loadedLevel - 1;
+					int num2 = PlayerPrefs.GetInt("LevelLoad") - 1;
 					string customEventName2 = "Time_level_failed" + num2;
 					Dictionary<string, object> dictionary = new Dictionary<string, object>();
 					dictionary.Add("TimeLevel_Num", num2);
@@ -491,7 +576,8 @@ public class BikeUIController : MonoBehaviour
 				}
 				ParachuteControls.SetActive(false);
 				LevelFailedPanel.SetActive(true);
-				TimeBool = false;
+                AdsManager.Instance.UpdateBannerPosition(MaxSdkBase.BannerPosition.BottomCenter);
+                TimeBool = false;
 				LevelFailedBool = false;
 			}
 			PlayerPrefs.SetInt("RewardWacthed", 0);
@@ -523,13 +609,13 @@ public class BikeUIController : MonoBehaviour
 		}
 		if (ParachutControllerScript.LandingFailedBool && LevelFailedBool)
 		{
-			if (Application.loadedLevel > 2)
+			if (PlayerPrefs.GetInt("LevelLoad") > 2)
 			{
 				PlayerPrefs.SetInt("LvlFailedAdCallDB", 1);
 			}
 			if (PlayerPrefs.GetInt("ModeDB") == 0)
 			{
-				int num3 = Application.loadedLevel - 1;
+				int num3 = PlayerPrefs.GetInt("LevelLoad") - 1;
 				string customEventName3 = "level_failed" + num3;
 				Dictionary<string, object> dictionary = new Dictionary<string, object>();
 				dictionary.Add("Level_Num", num3);
@@ -537,7 +623,7 @@ public class BikeUIController : MonoBehaviour
 			}
 			else if (PlayerPrefs.GetInt("ModeDB") == 1)
 			{
-				int num4 = Application.loadedLevel - 2;
+				int num4 = PlayerPrefs.GetInt("LevelLoad") - 2;
 				string customEventName4 = "Time_level_failed" + num4;
 				Dictionary<string, object> dictionary = new Dictionary<string, object>();
 				dictionary.Add("TimeLevel_Num", num4);
@@ -545,8 +631,9 @@ public class BikeUIController : MonoBehaviour
 			}
 			ParachuteControls.SetActive(false);
 			LevelFailedPanel.SetActive(true);
-			
-			Time.timeScale = 0f;
+            AdsManager.Instance.UpdateBannerPosition(MaxSdkBase.BannerPosition.BottomCenter);
+
+            Time.timeScale = 0f;
 			if (PlayerPrefs.GetInt("ModeDB") == 0)
 			{
 				Analytics.CustomEvent("FreeModeLevelFailedP");
@@ -613,22 +700,24 @@ public class BikeUIController : MonoBehaviour
 
 	private void LevelComepleteCall()
 	{
-		if (Application.loadedLevel > 2 && PlayerPrefs.GetInt("NoAdsPurchase") == 0)
+		AdsManager.Instance.ShowMREC();
+		AdsManager.Instance.ShowInterstial();
+		if (PlayerPrefs.GetInt("LevelLoad") > 2 && PlayerPrefs.GetInt("NoAdsPurchase") == 0)
 		{
-			if (PlayerPrefs.GetInt("ADCounter") == 2)
-			{
-				CrossPromo.SetActive(true);
-				Time.timeScale = 0f;
-			}
-			else if (PlayerPrefs.GetInt("ADCounter") == 4)
-			{
-				CrossPromo.SetActive(true);
-				Time.timeScale = 0f;
-			}
-			else
-			{
+			//if (PlayerPrefs.GetInt("ADCounter") == 2)
+			//{
+			//	CrossPromo.SetActive(true);
+			//	Time.timeScale = 0f;
+			//}
+			//else if (PlayerPrefs.GetInt("ADCounter") == 4)
+			//{
+			//	CrossPromo.SetActive(true);
+			//	Time.timeScale = 0f;
+			//}
+			//else
+			//{
 				PlayerPrefs.SetInt("LvlCompleteAdCallDB", 1);
-			}
+			//}
 			if (PlayerPrefs.GetInt("ADCounter") >= 5)
 			{
 				PlayerPrefs.SetInt("ADCounter", 5);
@@ -638,12 +727,13 @@ public class BikeUIController : MonoBehaviour
 				PlayerPrefs.SetInt("ADCounter", PlayerPrefs.GetInt("ADCounter") + 1);
 			}
 		}
-		if (PlayerPrefs.GetInt("RateUsDB") == 0 && (Application.loadedLevel == 3 || Application.loadedLevel == 6))
-		{
-			RateUsDialogue.SetActive(true);
-		}
+		//if (PlayerPrefs.GetInt("RateUsDB") == 0 && (Application.loadedLevel == 3 || Application.loadedLevel == 6))
+		//{
+		//	RateUsDialogue.SetActive(true);
+		//}
 		ParachuteControls.SetActive(false);
 		LevelCompletePanel.SetActive(true);
+		AdsManager.Instance.UpdateBannerPosition(MaxSdkBase.BannerPosition.BottomCenter);
 		if (PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			
@@ -656,92 +746,78 @@ public class BikeUIController : MonoBehaviour
 			{
 				PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") + 500);
 			}
-			if (Application.loadedLevel == 2)
+			int level_complete = PlayerPrefs.GetInt("LevelLoad");
+			switch (level_complete)
 			{
-				SplashScript.FUnlocked_level2.ValueData = 1;
-				
+				case 1:
+					PlayerPrefs.SetInt("FUnlockedLevel2",1) ;
+					break;
+				case 2:
+					PlayerPrefs.SetInt("FUnlockedLevel3",1) ;
+					break;
+				case 3:
+					PlayerPrefs.SetInt("FUnlockedLevel4",1) ;
+					break;
+				case 4:
+					PlayerPrefs.SetInt("FUnlockedLevel5",1) ;
+					break;
+				case 5:
+					PlayerPrefs.SetInt("FUnlockedLevel6",1) ;
+					break;
+				case 6:
+					PlayerPrefs.SetInt("FUnlockedLevel7",1) ;
+					break;
+				case 7:
+					PlayerPrefs.SetInt("FUnlockedLevel8",1) ;
+					break;
+				case 8:
+					PlayerPrefs.SetInt("FUnlockedLevel9",1) ;
+					break;
+				case 9:
+					PlayerPrefs.SetInt("FUnlockedLevel10",1) ;
+					PlayerPrefs.SetInt("UnlockTimeModeDB", 1);
+					break;
+				case 10:
+					PlayerPrefs.SetInt("FUnlockedLevel11",1) ;
+					break;
+				case 11:
+					PlayerPrefs.SetInt("FUnlockedLevel12",1) ;
+					break;
+				case 12:
+					PlayerPrefs.SetInt("FUnlockedLevel13",1) ;
+					break;
+				case 13:
+					PlayerPrefs.SetInt("FUnlockedLevel14",1) ;
+					break;
+				case 14:
+					PlayerPrefs.SetInt("FUnlockedLevel15",1) ;
+					break;
+				case 15:
+					PlayerPrefs.SetInt("FUnlockedLevel16",1) ;
+					break;
+				case 16:
+					PlayerPrefs.SetInt("FUnlockedLevel17",1) ;
+					break;
+				case 17:
+					PlayerPrefs.SetInt("FUnlockedLevel18",1) ;
+					break;
+				case 18:
+					PlayerPrefs.SetInt("FUnlockedLevel19",1) ;
+					break;
+				case 19:
+					PlayerPrefs.SetInt("FUnlockedLevel20",1) ;
+					break;
+				default:
+					break;
 			}
-			else if (Application.loadedLevel == 3)
-			{
-				SplashScript.FUnlocked_level3.ValueData = 1;
-			
-			}
-			else if (Application.loadedLevel == 4)
-			{
-				SplashScript.FUnlocked_level4.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 5)
-			{
-				SplashScript.FUnlocked_level5.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 6)
-			{
-				SplashScript.FUnlocked_level6.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 7)
-			{
-				SplashScript.FUnlocked_level7.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 8)
-			{
-				SplashScript.FUnlocked_level8.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 9)
-			{
-				SplashScript.FUnlocked_level9.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 10)
-			{
-				SplashScript.FUnlocked_level10.ValueData = 1;
-				PlayerPrefs.SetInt("UnlockTimeModeDB", 1);
-			}
-			else if (Application.loadedLevel == 11)
-			{
-				SplashScript.FUnlocked_level11.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 12)
-			{
-				SplashScript.FUnlocked_level12.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 13)
-			{
-				SplashScript.FUnlocked_level13.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 14)
-			{
-				SplashScript.FUnlocked_level14.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 15)
-			{
-				SplashScript.FUnlocked_level15.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 16)
-			{
-				SplashScript.FUnlocked_level16.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 17)
-			{
-				SplashScript.FUnlocked_level17.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 18)
-			{
-				SplashScript.FUnlocked_level8.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 19)
-			{
-				SplashScript.FUnlocked_level19.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 20)
-			{
-				SplashScript.FUnlocked_level20.ValueData = 1;
-			}
+	
 			CashText.text = "+ 500";
-			int num = Application.loadedLevel - 1;
+			int num = PlayerPrefs.GetInt("LevelLoad") - 1;
 			string customEventName = "FreeModeLevel" + num;
 			Dictionary<string, object> dictionary = new Dictionary<string, object>();
 			dictionary.Add("FreeMode_Level_Num", num);
 			Analytics.CustomEvent(customEventName, dictionary);
-			int num2 = Application.loadedLevel - 1;
+			int num2 = PlayerPrefs.GetInt("LevelLoad") - 1;
 			string customEventName2 = "level_complete" + num2;
 			dictionary = new Dictionary<string, object>();
 			dictionary.Add("Level_Num", num2);
@@ -758,104 +834,96 @@ public class BikeUIController : MonoBehaviour
 			{
 				PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") + 1000);
 			}
-			if (Application.loadedLevel == 2)
+			int level_complete_time = PlayerPrefs.GetInt("LevelLoad");
+			switch (level_complete_time)
 			{
-				SplashScript.TUnlocked_level2.ValueData = 1;
+				case 1:
+					PlayerPrefs.SetInt("TUnlockedLevel2",1) ;
+					break;
+				case 2:
+					PlayerPrefs.SetInt("TUnlockedLevel3",1) ;
+					break;
+				case 3:
+					PlayerPrefs.SetInt("TUnlockedLevel4",1) ;
+					break;
+				case 4:
+					PlayerPrefs.SetInt("TUnlockedLevel5",1) ;
+					break;
+				case 5:
+					PlayerPrefs.SetInt("TUnlockedLevel6",1) ;
+					break;
+				case 6:
+					PlayerPrefs.SetInt("TUnlockedLevel7",1) ;
+					break;
+				case 7:
+					PlayerPrefs.SetInt("TUnlockedLevel8",1) ;
+					break;
+				case 8:
+					PlayerPrefs.SetInt("TUnlockedLevel9",1) ;
+					break;
+				case 9:
+					PlayerPrefs.SetInt("TUnlockedLevel10",1) ;
+					break;
+				case 10:
+					PlayerPrefs.SetInt("TUnlockedLevel11",1) ;
+					break;
+				case 11:
+					PlayerPrefs.SetInt("TUnlockedLevel12",1) ;
+					break;
+				case 12:
+					PlayerPrefs.SetInt("TUnlockedLevel13",1) ;
+					break;
+				case 13:
+					PlayerPrefs.SetInt("TUnlockedLevel14",1) ;
+					break;
+				case 14:
+					PlayerPrefs.SetInt("TUnlockedLevel15",1) ;
+					break;
+				case 15:
+					PlayerPrefs.SetInt("TUnlockedLevel16",1) ;
+					break;
+				case 16:
+					PlayerPrefs.SetInt("TUnlockedLevel17",1) ;
+					break;
+				case 17:
+					PlayerPrefs.SetInt("TUnlockedLevel18",1) ;
+					break;
+				case 18:
+					PlayerPrefs.SetInt("TUnlockedLevel19",1) ;
+					break;
+				case 19:
+					PlayerPrefs.SetInt("TUnlockedLevel20",1) ;
+					break;
+				default:
+					break;
 			}
-			else if (Application.loadedLevel == 3)
-			{
-				SplashScript.TUnlocked_level3.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 4)
-			{
-				SplashScript.TUnlocked_level4.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 5)
-			{
-				SplashScript.TUnlocked_level5.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 6)
-			{
-				SplashScript.TUnlocked_level6.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 7)
-			{
-				SplashScript.TUnlocked_level7.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 8)
-			{
-				SplashScript.TUnlocked_level8.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 9)
-			{
-				SplashScript.TUnlocked_level9.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 10)
-			{
-				SplashScript.TUnlocked_level10.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 11)
-			{
-				SplashScript.TUnlocked_level11.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 12)
-			{
-				SplashScript.TUnlocked_level12.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 13)
-			{
-				SplashScript.TUnlocked_level13.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 14)
-			{
-				SplashScript.TUnlocked_level14.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 15)
-			{
-				SplashScript.TUnlocked_level15.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 16)
-			{
-				SplashScript.TUnlocked_level16.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 17)
-			{
-				SplashScript.TUnlocked_level17.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 18)
-			{
-				SplashScript.TUnlocked_level18.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 19)
-			{
-				SplashScript.TUnlocked_level19.ValueData = 1;
-			}
-			else if (Application.loadedLevel == 20)
-			{
-				SplashScript.TUnlocked_level20.ValueData = 1;
-			}
+	
+			
 			CashText.text = "+ 1000";
-			int num3 = Application.loadedLevel - 1;
+			int num3 =PlayerPrefs.GetInt("LevelLoad") - 1;
 			string customEventName3 = "TimeTrialModeLevel" + num3;
 			Dictionary<string, object> dictionary = new Dictionary<string, object>();
 			dictionary.Add("TimeTrialMode_Level_Num", num3);
 			Analytics.CustomEvent(customEventName3, dictionary);
-			int loadedLevel = Application.loadedLevel;
+			int loadedLevel = PlayerPrefs.GetInt("LevelLoad");
 			string customEventName4 = "Time_level_complete" + loadedLevel;
 			dictionary = new Dictionary<string, object>();
 			dictionary.Add("TimeLevel_Num", loadedLevel);
 			Analytics.CustomEvent(customEventName4, dictionary);
 			Analytics.CustomEvent("TimeTrialModeLevelComplete");
 		}
+		PlayerPrefs.Save();
 		Time.timeScale = 0f;
 	}
 
 	public void Pausebtn_Click()
 	{
-		if (Application.loadedLevel > 2)
+		AdsManager.Instance.ShowInterstial();
+		if (PlayerPrefs.GetInt("LevelLoad") > 2)
 		{
 			PlayerPrefs.SetInt("PauseAdCallDB", 1);
 		}
+		TrainingPanel.SetActive(false);
 		PausePanel.SetActive(true);
 		Analytics.CustomEvent("PauseGameCall");
 		Time.timeScale = 0f;
@@ -869,30 +937,40 @@ public class BikeUIController : MonoBehaviour
 
 	public void Restartbtn_Click()
 	{
-		Time.timeScale = 1f;
+        AdsManager.Instance.ShowInterstial();
+        Time.timeScale = 1f;
 		Application.LoadLevel(Application.loadedLevel);
 	}
 
 	public void Menubtn_Click()
 	{
-		Time.timeScale = 1f;
+        AdsManager.Instance.ShowInterstial();
+        Time.timeScale = 1f;
 		PlayerPrefs.SetInt("Next", 1);
 		StartCoroutine(LoadNewScene(1));
 	}
 
-	public void Nextbtn_Click(int LevelNum)
+	public void Nextbtn_Click()
 	{
+		AdsManager.Instance.ShowInterstial();
 		Time.timeScale = 1f;
-		if(Application.loadedLevel == LevelNum){
-			StartCoroutine(LoadNewScene(LevelNum+1));
-		}
-		
+		PlayerPrefs.SetInt("LevelLoad", PlayerPrefs.GetInt("LevelLoad") +1);
+	
+		StartCoroutine(LoadNewScene(2));
 	}
 
 	public void Yesbtn_Click()
 	{
-		Time.timeScale = 1f;
-		PlayerPrefs.SetInt("RewardAdCallDB", 1);
+		if (!AdsManager.Instance.IsRewardAvailable())
+		{
+			VideoNotAvailablePanel.SetActive(true);
+			return;
+		}
+		AdsManager.Instance.ShowReward((b) =>
+		{
+            Time.timeScale = 1f;
+            PlayerPrefs.SetInt("RewardAdCallDB", 1);
+        });
 	}
 
 	public void Nobtn_Click()
@@ -900,7 +978,7 @@ public class BikeUIController : MonoBehaviour
 		Analytics.CustomEvent("NotWantRewardAd");
 		if (PlayerPrefs.GetInt("ModeDB") == 0)
 		{
-			int num = Application.loadedLevel - 1;
+			int num = PlayerPrefs.GetInt("LevelLoad") - 1;
 			string customEventName = "level_failed" + num;
 			Dictionary<string, object> dictionary = new Dictionary<string, object>();
 			dictionary.Add("Level_Num", num);
@@ -908,7 +986,7 @@ public class BikeUIController : MonoBehaviour
 		}
 		else if (PlayerPrefs.GetInt("ModeDB") == 1)
 		{
-			int num2 = Application.loadedLevel - 1;
+			int num2 = PlayerPrefs.GetInt("LevelLoad") - 1;
 			string customEventName2 = "Time_level_failed" + num2;
 			Dictionary<string, object> dictionary = new Dictionary<string, object>();
 			dictionary.Add("TimeLevel_Num", num2);
@@ -916,14 +994,15 @@ public class BikeUIController : MonoBehaviour
 		}
 		TimeBool = false;
 		Time.timeScale = 1f;
-		if (Application.loadedLevel > 2)
+		if (PlayerPrefs.GetInt("LevelLoad") > 2)
 		{
 			PlayerPrefs.SetInt("LvlFailedAdCallDB", 1);
 		}
 		ParachuteControls.SetActive(false);
 		LevelFailedPanel.SetActive(true);
 		RewardAdPanel.SetActive(false);
-	}
+        AdsManager.Instance.UpdateBannerPosition(MaxSdkBase.BannerPosition.BottomCenter);
+    }
 
 	public void CheckPoint_Skip_Btn_Click()
 	{
@@ -932,9 +1011,17 @@ public class BikeUIController : MonoBehaviour
 
 	public void CheckPoint_Reward_YesBtn_Click()
 	{
-		Time.timeScale = 1f;
-		CheckPointRewardBool = true;
-		PlayerPrefs.SetInt("RewardAdCallDB", 1);
+		if (!AdsManager.Instance.IsRewardAvailable())
+		{
+			VideoNotAvailablePanel.SetActive(true);
+			return;
+		}
+		AdsManager.Instance.ShowReward((b) =>
+		{
+            Time.timeScale = 1f;
+            CheckPointRewardBool = true;
+            PlayerPrefs.SetInt("RewardAdCallDB", 1);
+        });
 	}
 
 	public void CheckPoint_Reward_NoBtn_Click()
@@ -988,6 +1075,7 @@ public class BikeUIController : MonoBehaviour
 
 	private IEnumerator LoadNewScene(int LevelScene)
 	{
+		AdsManager.Instance.HideMREC();
 		yield return new WaitForSeconds(1f);
 		AsyncOperation async = Application.LoadLevelAsync(LevelScene);
 		while (!async.isDone)
@@ -1020,7 +1108,7 @@ public class BikeUIController : MonoBehaviour
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			Application.OpenURL("https://play.google.com/store/apps/details?id=com.monstergamesproductions.ramp.moto.rider");
+			Application.OpenURL("");
 		}
 		else if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
@@ -1038,14 +1126,14 @@ public class BikeUIController : MonoBehaviour
 
 	public void LikeUS_Click_Btn()
 	{
-		Application.OpenURL("https://www.facebook.com/monstergamesproductions");
+		Application.OpenURL("");
 		Analytics.CustomEvent("FBLikeClick");
 	}
 
 	public void Download_Click_Btn()
 	{
 		Time.timeScale = 1f;
-		Application.OpenURL("https://play.google.com/store/apps/details?id=com.monstergamesproductions.formula.racing");
+		Application.OpenURL("");
 		PlayerPrefs.SetInt("ADCounter", 5);
 		Analytics.CustomEvent("CrossAdClick");
 		CrossPromo.SetActive(false);

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "744222542593",
+    "project_id": "dre39-bike-stunt",
+    "storage_bucket": "dre39-bike-stunt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744222542593:android:f50006630e9fc098ac6900",
+        "android_client_info": {
+          "package_name": "com.hihiparty.bike.stunt.game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXLoGvuSQyAW_3SnaryoTkdN8x2wQXRaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

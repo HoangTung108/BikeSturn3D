@@ -187,29 +187,31 @@ namespace FluffyUnderware.Curvy.Controllers
 
 		protected override void OnEnable()
 		{
-			if (Application.loadedLevel == 6 || Application.loadedLevel == 8)
-			{
+		
 				BikeControlScript = Object.FindObjectOfType<BikeControl>();
 				if (BikeControlScript != null)
 				{
-					if (BikeControlScript.junctionBool)
+					if (PlayerPrefs.GetInt("Collider2") == 1)
 					{
 						m_Spline = Spline2;
 					}
-					else if (BikeControlScript.CheckpointCounter == 3)
+					else if (PlayerPrefs.GetInt("Collider3") == 1)
 					{
 						m_Spline = Spline3;
 					}
-					else
+					else if (PlayerPrefs.GetInt("Collider1") ==1)
 					{
 						m_Spline = Spline1;
 					}
-				}
+					else
+					{
+						m_Spline = m_Spline;
+					}
+					
+				
 			}
-			else
-			{
-				m_Spline = m_Spline;
-			}
+			
+			
 			base.OnEnable();
 			BindEvents();
 		}

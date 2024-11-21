@@ -110,23 +110,35 @@ public class MenuScript : MonoBehaviour
 
 	private int MultiplayerBikecounter;
 
-	private string HighScoreleaderBoardID = "com.monstergamesproductions.ramp.moto.rider.highscore";
+	private string HighScoreleaderBoardID = "highscore";
 
-	private string CrazyStunterAchID = "com.monstergamesproductions.ramp.moto.rider.ach.crazy.stunter";
+	private string CrazyStunterAchID = ".crazy.stunter";
 
-	private string ProStunterAchID = "com.monstergamesproductions.ramp.moto.rider.ach.pro.stunter";
+	private string ProStunterAchID = "aaaaa.rider.ach.pro.stunter";
 
 	public GameObject StarterPackMSG;
 
-	public Scrollbar PowerScrollBar;
+	public Image PowerScrollBar;
 
-	public Scrollbar HandlingScrollBar;
+	public Image HandlingScrollBar;
 
-	public Scrollbar BrakingScrollBar;
+	public Image BrakingScrollBar;
+
+	public GameObject backClick;
+
+	public GameObject backClick2;
 
 	public static bool LevelPageNoBool;
 
 	public static bool LoginBool;
+
+	public Text textSound;
+
+	public Text textMusic;
+
+	public Text textLanguage;
+
+	public GameObject panelRewardNotAvailable, buttonBuyBike;
 
 	private string HighScoreleaderBoardIDAndroid = "CgkI2ZOc-_kPEAIQAA";
 
@@ -134,12 +146,15 @@ public class MenuScript : MonoBehaviour
 
 	private string ProStunterAchIDAndroid = "CgkI2ZOc-_kPEAIQAg";
 
-	private void Awake(){
+	private int Language_count = 0;
 
+	private void Awake(){
+		
 	}
 
 	private void Start()
 	{
+		backClick.SetActive(false);
 		Time.timeScale = 1f;
 		// Handheld.StopActivityIndicator();
 		PlayerPrefs.SetInt("ModeDB", 0);
@@ -171,7 +186,6 @@ public class MenuScript : MonoBehaviour
 		Analytics.CustomEvent("menuStart");
 		if (PlayerPrefs.GetInt("Next") == 1)
 		{
-			Debug.Log("Hello");
 			LevelSelectionPanel.SetActive(true);
 			LevelSelectionPage1.SetActive(true);
 			BikeSelectionPanel.SetActive(false);
@@ -235,6 +249,11 @@ public class MenuScript : MonoBehaviour
 		 
 
 		
+	}
+
+	public void ClosePanelRewardMessage()
+	{
+		panelRewardNotAvailable.SetActive(false);	
 	}
 
 	public void ShowLeaderBoardBtn_Click()
@@ -302,9 +321,9 @@ public class MenuScript : MonoBehaviour
 	}
 
 	public void PlayAds(){
-		if (Advertisement.IsReady()){
-			Advertisement.Show();
-		}
+		//if (Advertisement.IsReady()){
+		//	Advertisement.Show();
+		//}
 	}
 
 	private void Update()
@@ -333,39 +352,33 @@ public class MenuScript : MonoBehaviour
 		{
 			LevelSelectionBack_Click();
 		}
-		if (PlayerPrefs.GetString("Sound Status") == "False")
+		if (PlayerPrefs.GetString("Sound Status") == "False" )
 		{
-			SondOffBtn.SetActive(true);
-			SondONBtn.SetActive(false);
+			textSound.text = "OFF";
 			PlayerPrefs.SetString("Sound Status", "False");
 			PlayerPrefs.Save();
 		}
 		else
 		{
-			SondOffBtn.SetActive(false);
-			SondONBtn.SetActive(true);
+			textSound.text = "ON";
 			PlayerPrefs.SetString("Sound Status", "True");
 			PlayerPrefs.Save();
 		}
 		if (PlayerPrefs.GetString("Music Status") == "False")
 		{
-			MUSICOffBtn.SetActive(true);
-			MUSICONBtn.SetActive(false);
+			textMusic.text = "OFF";
 			BackgroundMusic.SetActive(false);
 			PlayerPrefs.SetString("Music Status", "False");
 			PlayerPrefs.Save();
 		}
 		else
 		{
-			MUSICOffBtn.SetActive(false);
-			MUSICONBtn.SetActive(true);
+			textMusic.text = "ON";
 			BackgroundMusic.SetActive(true);
 			PlayerPrefs.SetString("Music Status", "True");
 			PlayerPrefs.Save();
 		}
-		PowerScrollBar.value = 0f;
-		HandlingScrollBar.value = 0f;
-		BrakingScrollBar.value = 0f;
+
 	}
 
 	public void PlayClick_Btn()
@@ -427,7 +440,6 @@ public class MenuScript : MonoBehaviour
 	public void InAppClick_Btn()
 	{
 		inAppbackClick = 0;
-		
 		InApPanel.SetActive(true);
 		ScreenNumber = 2;
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -472,6 +484,8 @@ public class MenuScript : MonoBehaviour
 		LevelSelectionPanel.SetActive(false);
 		BikeSelectionPanel.SetActive(false);
 		ModeSelectionPanel.SetActive(true);
+		backClick.SetActive(false);
+		backClick2.SetActive(false);
 		ScreenNumber = 3;
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
@@ -499,7 +513,6 @@ public class MenuScript : MonoBehaviour
 			BikeRightBtn.SetActive(false);
 			BikeLeftBtn.SetActive(true);
 			counter = 11;
-			
 		}
 		else
 		{
@@ -513,7 +526,9 @@ public class MenuScript : MonoBehaviour
 			DesBikeIns();
 			BikeIns();
 		}
-		if (PlayerPrefs.GetString("Sound Status") == "True")
+		RefreshButtonState();
+
+        if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
 		}
@@ -540,11 +555,19 @@ public class MenuScript : MonoBehaviour
 			DesBikeIns();
 			BikeIns();
 		}
-		if (PlayerPrefs.GetString("Sound Status") == "True")
+		RefreshButtonState();
+        if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
 		}
 	}
+
+	private void RefreshButtonState()
+	{
+		Debug.Log("Bike:" + counter);
+        buttonBuyBike.SetActive(PlayerPrefs.GetInt("bike_" + counter, 0) == 0);
+        BikeSelectBtn.SetActive(PlayerPrefs.GetInt("bike_" + counter, 0) == 1);
+    }
 
 	public void BikeSelectGo_Btn()
 	{
@@ -554,14 +577,9 @@ public class MenuScript : MonoBehaviour
 			ModeSelectionPanel.SetActive(true);
 			BikeSelectionPanel.SetActive(false);
 			PlayerPrefs.SetInt("BikeSelDB", counter);
-			ScreenNumber = 3;
 			CheckBike();
 		}
-		else
-		{
-			PlayerPrefs.SetInt("MultiPlayerBikeSelDB", MultiplayerBikecounter);
-			Application.LoadLevel(22);
-		}
+	
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
@@ -570,34 +588,34 @@ public class MenuScript : MonoBehaviour
 	private void CheckBike(){
 		switch (counter){
 			case 2: 
-				SplashScript.BikeTwo.ValueData =1;
+				PlayerPrefs.SetInt("bike_2",1);
 				break;
 			case 3:
-				SplashScript.BikeThree.ValueData =1;
+				PlayerPrefs.SetInt("bike_3",1);
 				break;
 			case 4:
-				SplashScript.BikeFour.ValueData =1;
+				PlayerPrefs.SetInt("bike_4",1);
 				break;
 			case 5:
-				SplashScript.BikeFive.ValueData =1;
+				PlayerPrefs.SetInt("bike_5",1);
 				break;
 			case 6:
-				SplashScript.BikeSix.ValueData =1;
+				PlayerPrefs.SetInt("bike_6",1);
 				break;
 			case 7:
-				SplashScript.BikeSeven.ValueData =1;
+				PlayerPrefs.SetInt("bike_7",1);
 				break;
 			case 8:
-				SplashScript.BikeEight.ValueData =1;
+				PlayerPrefs.SetInt("bike_8",1);
 				break;
 			case 9:
-				SplashScript.BikeNine.ValueData =1;
+				PlayerPrefs.SetInt("bike_9",1);
 				break;
 			case 10:
-				SplashScript.BikeTen.ValueData =1;
+				PlayerPrefs.SetInt("bike_10",1);
 				break;
 			case 11:
-				SplashScript.BikeEleven.ValueData =1;
+				PlayerPrefs.SetInt("bike_11",1);
 				break;
 			default:
 				break;
@@ -607,7 +625,13 @@ public class MenuScript : MonoBehaviour
 	}
 
 	public void FreeMode_Btn()
+	{ 	
+		backClick.SetActive(true);
+		StartCoroutine(TurnOnFree());
+	}
+	IEnumerator<WaitForSeconds> TurnOnFree()
 	{
+		yield return new WaitForSeconds(0.2f);
 		LevelSelectionPanel.SetActive(true);
 		ModeSelectionPanel.SetActive(false);
 		BikeSelectionPanel.SetActive(false);
@@ -627,11 +651,18 @@ public class MenuScript : MonoBehaviour
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
 		}
+
 	}
 
 	public void TimeMode_Btn()
 	{
-		if (SplashScript.FUnlocked_level10.ValueData == 1){
+		backClick2.SetActive(true);
+		StartCoroutine(TurnOnTime());
+	}
+	IEnumerator<WaitForSeconds> TurnOnTime()
+	{
+		yield return new WaitForSeconds(0.2f);
+			if (PlayerPrefs.GetInt("FUnlockedLevel10")== 1){
 				PlayerPrefs.SetInt("UnlockTimeModeDB", 1);
 				
 			}
@@ -639,6 +670,7 @@ public class MenuScript : MonoBehaviour
 		{
 			
 			ModeUnlockMsg.SetActive(true);
+			backClick2.SetActive(false);
 		}
 		else
 		{
@@ -662,13 +694,15 @@ public class MenuScript : MonoBehaviour
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
 		}
-	}
 
+	}
 	public void ModeSelectionBack_Click()
 	{
 		LevelSelectionPanel.SetActive(false);
 		ModeSelectionPanel.SetActive(false);
 		BikeSelectionPanel.SetActive(true);
+		backClick.SetActive(false);
+		backClick2.SetActive(false);
 		ScreenNumber = 1;
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
@@ -702,11 +736,11 @@ public class MenuScript : MonoBehaviour
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			Application.OpenURL("http://www.facebook.com/sharer/sharer.php?u=https://play.google.com/store/apps/details?id=com.monstergamesproductions.ramp.moto.rider");
+			Application.OpenURL("");
 		}
 		else if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
-			Application.OpenURL("http://www.facebook.com/sharer/sharer.php?u=https://itunes.apple.com/us/app/3d-boat-racing-simulator-2018/id1326126127?ls=1&mt=8");
+			Application.OpenURL("");
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
@@ -718,11 +752,11 @@ public class MenuScript : MonoBehaviour
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			Application.OpenURL("https://plus.google.com/share?url=https://play.google.com/store/apps/details?id=com.monstergamesproductions.ramp.moto.rider");
+			Application.OpenURL("");
 		}
 		else if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
-			Application.OpenURL("https://plus.google.com/share?url=https://itunes.apple.com/us/app/3d-boat-racing-simulator-2018/id1326126127?ls=1&mt=8");
+			Application.OpenURL("");
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
@@ -734,11 +768,9 @@ public class MenuScript : MonoBehaviour
 	{
 		if (Application.platform == RuntimePlatform.Android)
 		{
-			Application.OpenURL("http://twitter.com/share?text=Superhero Mega ramp Moto Rider: 3D GT Auto stunts&url=https://play.google.com/store/apps/details?id=com.monstergamesproductions.ramp.moto.rider");
 		}
 		else if (Application.platform == RuntimePlatform.IPhonePlayer)
 		{
-			Application.OpenURL("http://twitter.com/share?text=Superhero Mega ramp Moto Rider: 3D GT Auto stunts&url=https://itunes.apple.com/us/app/3d-boat-racing-simulator-2018/id1326126127?ls=1&mt=8");
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
@@ -748,110 +780,125 @@ public class MenuScript : MonoBehaviour
 
 	public void BikeBuyBtn_Click()
 	{
-		if (counter == 2 && PlayerPrefs.GetInt("CashDB") >= 2000)
+		if(AdsManager.Instance.IsRewardAvailable())
 		{
-			SplashScript.BikeTwo.ValueData =1;
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 2000);
-			BikeSelectBtn.SetActive(true);
-			Bike2PriceText.SetActive(false);
-		
-			
-			
-		}
-		else if (counter == 3 && PlayerPrefs.GetInt("CashDB") >= 5000)
-		{
-			SplashScript.BikeThree.ValueData =1;
-			PlayerPrefs.SetInt("BikeThreePurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 5000);
-			BikeSelectBtn.SetActive(true);
-			Bike3PriceText.SetActive(false);
-		
-		}
-		else if (counter == 4 && PlayerPrefs.GetInt("CashDB") >= 20000)
-		{
-			SplashScript.BikeFour.ValueData =1;
-			PlayerPrefs.SetInt("BikeFourPurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 20000);
-			BikeSelectBtn.SetActive(true);
-		
-			Bike4PriceText.SetActive(false);
-		
-		}
-		else if (counter == 5 && PlayerPrefs.GetInt("CashDB") >= 40000)
-		{
-			SplashScript.BikeFive.ValueData =1;
-			PlayerPrefs.SetInt("BikeFivePurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 40000);
-			BikeSelectBtn.SetActive(true);
-
-			Bike5PriceText.SetActive(false);
-			
-		}
-		else if (counter == 6 && PlayerPrefs.GetInt("CashDB") >= 50000)
-		{
-			SplashScript.BikeSix.ValueData =1;
-			PlayerPrefs.SetInt("BikeSixPurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 50000);
-			BikeSelectBtn.SetActive(true);
-
-			Bike6PriceText.SetActive(false);
-			
-		}
-		else if (counter == 7 && PlayerPrefs.GetInt("CashDB") >= 60000)
-		{
-			SplashScript.BikeSeven.ValueData =1;
-			PlayerPrefs.SetInt("BikeSevenPurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 60000);
-			BikeSelectBtn.SetActive(true);
-	
-			Bike7PriceText.SetActive(false);
-		
-		}
-		else if (counter == 8 && PlayerPrefs.GetInt("CashDB") >= 70000)
-		{
-			SplashScript.BikeEight.ValueData =1;
-			PlayerPrefs.SetInt("BikeEightPurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 70000);
-			BikeSelectBtn.SetActive(true);
-	
-			Bike8PriceText.SetActive(false);
-			
-		}
-		else if (counter == 9 && PlayerPrefs.GetInt("CashDB") >= 80000)
-		{
-			SplashScript.BikeNine.ValueData =1;
-			PlayerPrefs.SetInt("BikeNinePurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 80000);
-			BikeSelectBtn.SetActive(true);
-		
-			Bike9PriceText.SetActive(false);
-			
-		}
-		else if (counter == 10 && PlayerPrefs.GetInt("CashDB") >= 90000)
-		{
-			SplashScript.BikeTen.ValueData =1;
-			PlayerPrefs.SetInt("BikeTenPurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 90000);
-			BikeSelectBtn.SetActive(true);
-
-			Bike10PriceText.SetActive(false);
-			
-		}
-		else if (counter == 11 && PlayerPrefs.GetInt("CashDB") >= 100000)
-		{
-			SplashScript.BikeEleven.ValueData =1;
-			PlayerPrefs.SetInt("BikeElevenPurcahsed", 1);
-			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 100000);
-			BikeSelectBtn.SetActive(true);
-
-			Bike11PriceText.SetActive(false);
-			
+			AdsManager.Instance.ShowReward((b) =>
+			{
+				PlayerPrefs.SetInt("bike_" + counter, 1);
+				buttonBuyBike.SetActive(false);
+                BikeSelectBtn.SetActive(true);
+				RefreshButtonState();
+            });
 		}
 		else
 		{
-			NotEnoughCash.SetActive(true);
+			Debug.Log("Calling panelRewardNotAvailable.......");
+			panelRewardNotAvailable.SetActive(true);
 		}
-		CashText.text = PlayerPrefs.GetInt("CashDB").ToString();
+
+        #region Old
+        //if (counter == 2 && PlayerPrefs.GetInt("CashDB") >= 2000)
+        //{
+        //	SplashScript.BikeTwo.ValueData =1;
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 2000);
+        //	BikeSelectBtn.SetActive(true);
+        //	Bike2PriceText.SetActive(false);
+        //}
+        //else if (counter == 3 && PlayerPrefs.GetInt("CashDB") >= 5000)
+        //{
+        //	SplashScript.BikeThree.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeThreePurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 5000);
+        //	BikeSelectBtn.SetActive(true);
+        //	Bike3PriceText.SetActive(false);
+        //}
+        //else if (counter == 4 && PlayerPrefs.GetInt("CashDB") >= 20000)
+        //{
+        //	SplashScript.BikeFour.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeFourPurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 20000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike4PriceText.SetActive(false);
+
+        //}
+        //else if (counter == 5 && PlayerPrefs.GetInt("CashDB") >= 40000)
+        //{
+        //	SplashScript.BikeFive.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeFivePurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 40000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike5PriceText.SetActive(false);
+
+        //}
+        //else if (counter == 6 && PlayerPrefs.GetInt("CashDB") >= 50000)
+        //{
+        //	SplashScript.BikeSix.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeSixPurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 50000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike6PriceText.SetActive(false);
+
+        //}
+        //else if (counter == 7 && PlayerPrefs.GetInt("CashDB") >= 60000)
+        //{
+        //	SplashScript.BikeSeven.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeSevenPurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 60000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike7PriceText.SetActive(false);
+
+        //}
+        //else if (counter == 8 && PlayerPrefs.GetInt("CashDB") >= 70000)
+        //{
+        //	SplashScript.BikeEight.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeEightPurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 70000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike8PriceText.SetActive(false);
+
+        //}
+        //else if (counter == 9 && PlayerPrefs.GetInt("CashDB") >= 80000)
+        //{
+        //	SplashScript.BikeNine.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeNinePurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 80000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike9PriceText.SetActive(false);
+
+        //}
+        //else if (counter == 10 && PlayerPrefs.GetInt("CashDB") >= 90000)
+        //{
+        //	SplashScript.BikeTen.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeTenPurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 90000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike10PriceText.SetActive(false);
+
+        //}
+        //else if (counter == 11 && PlayerPrefs.GetInt("CashDB") >= 100000)
+        //{
+        //	SplashScript.BikeEleven.ValueData =1;
+        //	PlayerPrefs.SetInt("BikeElevenPurcahsed", 1);
+        //	PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") - 100000);
+        //	BikeSelectBtn.SetActive(true);
+
+        //	Bike11PriceText.SetActive(false);
+
+        //}
+        //else
+        //{
+        //	NotEnoughCash.SetActive(true);
+        //}
+        #endregion
+
+        CashText.text = PlayerPrefs.GetInt("CashDB").ToString();
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
@@ -861,7 +908,8 @@ public class MenuScript : MonoBehaviour
 	public void LevelLoad_1_Btn()
 	{
 		LoadingPanel.SetActive(true);
-		LevelCounter = 2;
+		// LevelCounter = 2;
+		PlayerPrefs.SetInt("LevelLoad",1);
 		StartCoroutine(LoadNewScene());
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
@@ -871,16 +919,16 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_2_Btn()
 	{
-		if (SplashScript.FUnlocked_level2.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel2") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 3;
+			PlayerPrefs.SetInt("LevelLoad",2);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel2") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 3;
+			PlayerPrefs.SetInt("LevelLoad",2);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -891,16 +939,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_3_Btn()
 	{
-		if (SplashScript.FUnlocked_level3.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel3") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 4;
+			// LevelCounter = 4;
+			PlayerPrefs.SetInt("LevelLoad",3);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel3") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 4;
+			// LevelCounter = 4;
+			PlayerPrefs.SetInt("LevelLoad",3);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -911,16 +961,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_4_Btn()
 	{
-		if (SplashScript.FUnlocked_level4.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel4") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 5;
+			// LevelCounter = 5;
+			PlayerPrefs.SetInt("LevelLoad",4);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel4") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 5;
+			// LevelCounter = 5;
+			PlayerPrefs.SetInt("LevelLoad",4);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -931,16 +983,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_5_Btn()
 	{
-		if (SplashScript.FUnlocked_level5.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel5") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 6;
+			// LevelCounter = 6;
+			PlayerPrefs.SetInt("LevelLoad",5);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel5") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 6;
+			// LevelCounter = 6;
+			PlayerPrefs.SetInt("LevelLoad",5);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -951,16 +1005,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_6_Btn()
 	{
-		if (SplashScript.FUnlocked_level6.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel6") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 7;
+			// LevelCounter = 7;
+			PlayerPrefs.SetInt("LevelLoad",6);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel6") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 7;
+			// LevelCounter = 7;
+			PlayerPrefs.SetInt("LevelLoad",6);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -971,16 +1027,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_7_Btn()
 	{
-		if (SplashScript.FUnlocked_level7.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel7") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 8;
+			// LevelCounter = 8;
+			PlayerPrefs.SetInt("LevelLoad",7);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel7") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 8;
+			// LevelCounter = 8;
+			PlayerPrefs.SetInt("LevelLoad",7);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -991,16 +1049,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_8_Btn()
 	{
-		if (SplashScript.FUnlocked_level8.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel8") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 9;
+			// LevelCounter = 9;
+			PlayerPrefs.SetInt("LevelLoad",8);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel8") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 9;
+			// LevelCounter = 9;
+			PlayerPrefs.SetInt("LevelLoad",8);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1011,16 +1071,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_9_Btn()
 	{
-		if (SplashScript.FUnlocked_level9.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel9") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 10;
+			// LevelCounter = 10;
+			PlayerPrefs.SetInt("LevelLoad",9);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel9") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 10;
+			// LevelCounter = 10;
+			PlayerPrefs.SetInt("LevelLoad",9);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1031,16 +1093,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_10_Btn()
 	{
-		if (SplashScript.FUnlocked_level10.ValueData == 1&& PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel10") == 1&& PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 11;
+			// LevelCounter = 11;
+			PlayerPrefs.SetInt("LevelLoad",10);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel10") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 11;
+			// LevelCounter = 11;
+			PlayerPrefs.SetInt("LevelLoad",10);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1051,16 +1115,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_11_Btn()
 	{
-		if (SplashScript.FUnlocked_level11.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel11") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 12;
+			// LevelCounter = 12;
+			PlayerPrefs.SetInt("LevelLoad",11);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel11") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 12;
+			// LevelCounter = 12;
+			PlayerPrefs.SetInt("LevelLoad",11);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1071,16 +1137,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_12_Btn()
 	{
-		if (SplashScript.FUnlocked_level12.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel12") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 13;
+			// LevelCounter = 13;
+			PlayerPrefs.SetInt("LevelLoad",12);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel12") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 13;
+			// LevelCounter = 13;
+			PlayerPrefs.SetInt("LevelLoad",12);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1091,16 +1159,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_13_Btn()
 	{
-		if (SplashScript.FUnlocked_level13.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel13") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 14;
+			// LevelCounter = 14;
+			PlayerPrefs.SetInt("LevelLoad",13);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel13") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 14;
+			// LevelCounter = 14;
+			PlayerPrefs.SetInt("LevelLoad",13);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1111,16 +1181,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_14_Btn()
 	{
-		if (SplashScript.FUnlocked_level14.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel14") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 15;
+			// LevelCounter = 15;
+			PlayerPrefs.SetInt("LevelLoad",14);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel14") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 15;
+			// LevelCounter = 15;
+			PlayerPrefs.SetInt("LevelLoad",14);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1131,16 +1203,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_15_Btn()
 	{
-		if (SplashScript.FUnlocked_level15.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel15") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 16;
+			// LevelCounter = 16;
+			PlayerPrefs.SetInt("LevelLoad",15);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel15") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 16;
+			// LevelCounter = 16;
+			PlayerPrefs.SetInt("LevelLoad",15);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1151,16 +1225,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_16_Btn()
 	{
-		if (SplashScript.FUnlocked_level16.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel16") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 17;
+			// LevelCounter = 17;
+			PlayerPrefs.SetInt("LevelLoad",16);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel16") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 17;
+			// LevelCounter = 17;
+			PlayerPrefs.SetInt("LevelLoad",16);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1171,16 +1247,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_17_Btn()
 	{
-		if (SplashScript.FUnlocked_level17.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel17") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 18;
+			// LevelCounter = 18;
+			PlayerPrefs.SetInt("LevelLoad",17);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel17") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 18;
+			// LevelCounter = 18;
+			PlayerPrefs.SetInt("LevelLoad",17);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1191,16 +1269,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_18_Btn()
 	{
-		if (SplashScript.FUnlocked_level18.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel18") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 19;
+			// LevelCounter = 19;
+			PlayerPrefs.SetInt("LevelLoad",18);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel18") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 19;
+			// LevelCounter = 19;
+			PlayerPrefs.SetInt("LevelLoad",18);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1211,16 +1291,18 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_19_Btn()
 	{
-		if (SplashScript.FUnlocked_level19.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel19") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 20;
+			// LevelCounter = 20;
+			PlayerPrefs.SetInt("LevelLoad",19);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel19") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 20;
+			// LevelCounter = 20;
+			PlayerPrefs.SetInt("LevelLoad",19);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1231,17 +1313,19 @@ public class MenuScript : MonoBehaviour
 
 	public void LevelLoad_20_Btn()
 	{
-		if (SplashScript.FUnlocked_level20.ValueData == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
+		if (PlayerPrefs.GetInt("FUnlockedLevel20") == 1 && PlayerPrefs.GetInt("ModeDB") == 0)
 		{
 			LoadingPanel.SetActive(true);
-			LevelCounter = 21;
+			// LevelCounter = 21;
+			PlayerPrefs.SetInt("LevelLoad",20);
 			StartCoroutine(LoadNewScene());
 		}
 		else if (PlayerPrefs.GetInt("TUnlockedLevel20") == 1 && PlayerPrefs.GetInt("ModeDB") == 1)
 		{
 			PlayerPrefs.SetInt("UnlockALLLevelsDB", 1);
 			LoadingPanel.SetActive(true);
-			LevelCounter = 21;
+			// LevelCounter = 21;
+			PlayerPrefs.SetInt("LevelLoad",20);
 			StartCoroutine(LoadNewScene());
 		}
 		if (PlayerPrefs.GetString("Sound Status") == "True")
@@ -1253,7 +1337,7 @@ public class MenuScript : MonoBehaviour
 	private IEnumerator<object> LoadNewScene()
 	{
 		yield return new WaitForSeconds(3f);
-		AsyncOperation async = Application.LoadLevelAsync(LevelCounter);
+		AsyncOperation async = Application.LoadLevelAsync("gameplay");
 		while (!async.isDone)
 		{
 			yield return null;
@@ -1264,15 +1348,14 @@ public class MenuScript : MonoBehaviour
 	{
 		if (PlayerPrefs.GetString("Sound Status") == "False")
 		{
-			SondOffBtn.SetActive(true);
-			SondONBtn.SetActive(false);
+			
+			textSound.text = "OFF";
 			PlayerPrefs.SetString("Sound Status", "True");
 			PlayerPrefs.Save();
 		}
 		else if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
-			SondOffBtn.SetActive(false);
-			SondONBtn.SetActive(true);
+			textSound.text = "ON";
 			PlayerPrefs.SetString("Sound Status", "False");
 			PlayerPrefs.Save();
 		}
@@ -1286,16 +1369,14 @@ public class MenuScript : MonoBehaviour
 	{
 		if (PlayerPrefs.GetString("Music Status") == "False")
 		{
-			MUSICOffBtn.SetActive(true);
-			MUSICONBtn.SetActive(false);
+			textMusic.text = "OFF";
 			BackgroundMusic.SetActive(false);
 			PlayerPrefs.SetString("Music Status", "True");
 			PlayerPrefs.Save();
 		}
 		else if (PlayerPrefs.GetString("Music Status") == "True")
 		{
-			MUSICOffBtn.SetActive(false);
-			MUSICONBtn.SetActive(true);
+			textMusic.text = "ON";
 			BackgroundMusic.SetActive(true);
 			PlayerPrefs.SetString("Music Status", "False");
 			PlayerPrefs.Save();
@@ -1325,9 +1406,7 @@ public class MenuScript : MonoBehaviour
         return true;
     }
 	private void Quiting(){
-		string DB = JsonUtility.ToJson(SplashScript.db_value);
-		Debug.Log(DB);
-		System.IO.File.WriteAllText(SplashScript.datapath,DB);
+		PlayerPrefs.Save();
 	}
 	public void Quit_Yes_Click()
 	{
@@ -1360,117 +1439,73 @@ public class MenuScript : MonoBehaviour
 		ThanksPanel.SetActive(false);
 	}
 
-	public void EnglishLanguage_Select()
+	public void NextLanguage_Select()
 	{
-		PlayerPrefs.SetInt("LanguageSet", 0);
+		if (Language_count != null && Language_count <6)
+		{
+
+			Language_count++;
+		}
+		if (Language_count >=6)
+		{
+			Language_count = 0;
+		}
+		PlayerPrefs.SetInt("LanguageSet", Language_count);
 		LanguageSelection();
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
 		}
+		PlayerPrefs.Save();
 	}
 
-	public void ChinaLanguage_Select()
+	public void LastLanguage_Select()
 	{
-		PlayerPrefs.SetInt("LanguageSet", 1);
+		if (Language_count != null && Language_count >0)
+		{
+
+			Language_count --;
+		}
+		if (Language_count <=0)
+		{
+			Language_count = 5;
+		}
+		PlayerPrefs.SetInt("LanguageSet", Language_count);
 		LanguageSelection();
 		if (PlayerPrefs.GetString("Sound Status") == "True")
 		{
 			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
 		}
+		PlayerPrefs.Save();
 	}
 
-	public void FrenchLanguage_Select()
-	{
-		PlayerPrefs.SetInt("LanguageSet", 2);
-		LanguageSelection();
-		if (PlayerPrefs.GetString("Sound Status") == "True")
-		{
-			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
-		}
-	}
-
-	public void GermanLanguage_Select()
-	{
-		PlayerPrefs.SetInt("LanguageSet", 3);
-		LanguageSelection();
-		if (PlayerPrefs.GetString("Sound Status") == "True")
-		{
-			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
-		}
-	}
-
-	public void SpainishLanguage_Select()
-	{
-		PlayerPrefs.SetInt("LanguageSet", 4);
-		LanguageSelection();
-		if (PlayerPrefs.GetString("Sound Status") == "True")
-		{
-			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
-		}
-	}
-
-	public void IndianLanguage_Select()
-	{
-		PlayerPrefs.SetInt("LanguageSet", 5);
-		LanguageSelection();
-		if (PlayerPrefs.GetString("Sound Status") == "True")
-		{
-			GetComponent<AudioSource>().PlayOneShot(btn_click, 1f);
-		}
-	}
-
+	
 	private void LanguageSelection()
 	{
 		switch (PlayerPrefs.GetInt("LanguageSet"))
 		{
 		case 0:
-			EnglishLangBtn.image.color = Color.white;
-			ChinaLangBtn.image.color = Color.grey;
-			FrenchLangBtn.image.color = Color.grey;
-			GermanLangBtn.image.color = Color.grey;
-			SpainishLangBtn.image.color = Color.grey;
-			IndianLangBtn.image.color = Color.grey;
+			textLanguage.text = "ENGLISH";
 			break;
 		case 1:
-			EnglishLangBtn.image.color = Color.grey;
-			ChinaLangBtn.image.color = Color.white;
-			FrenchLangBtn.image.color = Color.grey;
-			GermanLangBtn.image.color = Color.grey;
-			SpainishLangBtn.image.color = Color.grey;
-			IndianLangBtn.image.color = Color.grey;
+			textLanguage.text = "CHINA";
+			
 			break;
 		case 2:
-			EnglishLangBtn.image.color = Color.grey;
-			ChinaLangBtn.image.color = Color.grey;
-			FrenchLangBtn.image.color = Color.white;
-			GermanLangBtn.image.color = Color.grey;
-			SpainishLangBtn.image.color = Color.grey;
-			IndianLangBtn.image.color = Color.grey;
+			textLanguage.text = "FRENCH";
+			
 			break;
 		case 3:
-			EnglishLangBtn.image.color = Color.grey;
-			ChinaLangBtn.image.color = Color.grey;
-			FrenchLangBtn.image.color = Color.grey;
-			GermanLangBtn.image.color = Color.white;
-			SpainishLangBtn.image.color = Color.grey;
-			IndianLangBtn.image.color = Color.grey;
+			textLanguage.text = "GERMAN";
+		
 			break;
 		case 4:
-			EnglishLangBtn.image.color = Color.grey;
-			ChinaLangBtn.image.color = Color.grey;
-			FrenchLangBtn.image.color = Color.grey;
-			GermanLangBtn.image.color = Color.grey;
-			SpainishLangBtn.image.color = Color.white;
-			IndianLangBtn.image.color = Color.grey;
+			textLanguage.text = "SPANISH";
+		
 			break;
 		case 5:
-			EnglishLangBtn.image.color = Color.grey;
-			ChinaLangBtn.image.color = Color.grey;
-			FrenchLangBtn.image.color = Color.grey;
-			GermanLangBtn.image.color = Color.grey;
-			SpainishLangBtn.image.color = Color.grey;
-			IndianLangBtn.image.color = Color.white;
+			textLanguage.text = "INDIAN";
+		
 			break;
 		}
 	}
@@ -1489,14 +1524,14 @@ public class MenuScript : MonoBehaviour
 			CloseAllPricePanel();
 			BikeSelectBtn.SetActive(true);
 			MultiplayerBikecounter = 0;
-			PowerScrollBar.size = 0.1f;
-			HandlingScrollBar.size = 0.15f;
-			BrakingScrollBar.size = 0.12f;
+			PowerScrollBar.fillAmount = 0.1f;
+			HandlingScrollBar.fillAmount = 0.15f;
+			BrakingScrollBar.fillAmount = 0.12f;
 		}
 		else if (counter == 2)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeTwo.KeyData == "BikeTwoPurcahsed" && SplashScript.BikeTwo.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_2") == 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1505,7 +1540,7 @@ public class MenuScript : MonoBehaviour
 			else
 			{
 				BikeSelectBtn.SetActive(false);
-				Bike2PriceText.SetActive(true);
+				//Bike2PriceText.SetActive(true);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
 				Bike5PriceText.SetActive(false);
@@ -1517,14 +1552,14 @@ public class MenuScript : MonoBehaviour
 				Bike11PriceText.SetActive(false);
 			}
 			MultiplayerBikecounter = 1;
-			PowerScrollBar.size = 0.15f;
-			HandlingScrollBar.size = 0.1f;
-			BrakingScrollBar.size = 0.12f;
+			PowerScrollBar.fillAmount = 0.15f;
+			HandlingScrollBar.fillAmount = 0.1f;
+			BrakingScrollBar.fillAmount = 0.12f;
 		}
 		else if (counter == 3)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeThree.KeyData == "BikeThreePurcahsed" && SplashScript.BikeThree.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_3")== 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1532,7 +1567,7 @@ public class MenuScript : MonoBehaviour
 			else
 			{	
 				BikeSelectBtn.SetActive(false);
-				Bike3PriceText.SetActive(true);
+				//Bike3PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
 				Bike5PriceText.SetActive(false);
@@ -1545,14 +1580,14 @@ public class MenuScript : MonoBehaviour
 			}
 		
 			MultiplayerBikecounter = 2;
-			PowerScrollBar.size = 0.25f;
-			HandlingScrollBar.size = 0.12f;
-			BrakingScrollBar.size = 0.2f;
+			PowerScrollBar.fillAmount = 0.25f;
+			HandlingScrollBar.fillAmount = 0.12f;
+			BrakingScrollBar.fillAmount = 0.2f;
 		}
 		else if (counter == 4)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeFour.KeyData == "BikeFourPurcahsed" && SplashScript.BikeFour.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_4") == 1)
 			{
 			
 				BikeSelectBtn.SetActive(true);
@@ -1562,7 +1597,7 @@ public class MenuScript : MonoBehaviour
 			{
 				
 				BikeSelectBtn.SetActive(false);
-				Bike4PriceText.SetActive(true);
+				//Bike4PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike5PriceText.SetActive(false);
@@ -1574,14 +1609,14 @@ public class MenuScript : MonoBehaviour
 				Bike11PriceText.SetActive(false);
 			}
 			MultiplayerBikecounter = 3;
-			PowerScrollBar.size = 0.35f;
-			HandlingScrollBar.size = 0.22f;
-			BrakingScrollBar.size = 0.4f;
+			PowerScrollBar.fillAmount = 0.35f;
+			HandlingScrollBar.fillAmount = 0.22f;
+			BrakingScrollBar.fillAmount = 0.4f;
 		}
 		else if (counter == 5)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeFive.KeyData == "BikeFivePurcahsed" && SplashScript.BikeFive.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_5") == 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1590,7 +1625,7 @@ public class MenuScript : MonoBehaviour
 			{
 				BikeSelectBtn.SetActive(false);
 
-				Bike5PriceText.SetActive(true);
+				//Bike5PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
@@ -1604,14 +1639,14 @@ public class MenuScript : MonoBehaviour
 			}
 			
 			MultiplayerBikecounter = 4;
-			PowerScrollBar.size = 0.55f;
-			HandlingScrollBar.size = 0.42f;
-			BrakingScrollBar.size = 0.6f;
+			PowerScrollBar.fillAmount = 0.55f;
+			HandlingScrollBar.fillAmount = 0.42f;
+			BrakingScrollBar.fillAmount = 0.6f;
 		}
 		else if (counter == 6)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeSix.KeyData == "BikeSixPurcahsed" && SplashScript.BikeSix.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_6") == 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1620,7 +1655,7 @@ public class MenuScript : MonoBehaviour
 			{
 				BikeSelectBtn.SetActive(false);
 	
-				Bike6PriceText.SetActive(true);
+				//Bike6PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
@@ -1634,14 +1669,14 @@ public class MenuScript : MonoBehaviour
 			}
 			
 			MultiplayerBikecounter = 5;
-			PowerScrollBar.size = 0.65f;
-			HandlingScrollBar.size = 0.52f;
-			BrakingScrollBar.size = 0.62f;
+			PowerScrollBar.fillAmount = 0.65f;
+			HandlingScrollBar.fillAmount = 0.52f;
+			BrakingScrollBar.fillAmount = 0.62f;
 		}
 		else if (counter == 7)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeSeven.KeyData == "BikeSevenPurcahsed" &&SplashScript.BikeSeven.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_7") == 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1650,7 +1685,7 @@ public class MenuScript : MonoBehaviour
 			{
 				BikeSelectBtn.SetActive(false);
 		
-				Bike7PriceText.SetActive(true);
+				//Bike7PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
@@ -1664,14 +1699,14 @@ public class MenuScript : MonoBehaviour
 			}
 			
 			MultiplayerBikecounter = 6;
-			PowerScrollBar.size = 0.75f;
-			HandlingScrollBar.size = 0.62f;
-			BrakingScrollBar.size = 0.52f;
+			PowerScrollBar.fillAmount = 0.75f;
+			HandlingScrollBar.fillAmount = 0.62f;
+			BrakingScrollBar.fillAmount = 0.52f;
 		}
 		else if (counter == 8)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeEight.KeyData == "BikeEightPurcahsed" && SplashScript.BikeEight.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_8") == 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1680,7 +1715,7 @@ public class MenuScript : MonoBehaviour
 			{
 				BikeSelectBtn.SetActive(false);
 		
-				Bike8PriceText.SetActive(true);
+				//Bike8PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
@@ -1694,14 +1729,14 @@ public class MenuScript : MonoBehaviour
 			}
 			
 			MultiplayerBikecounter = 7;
-			PowerScrollBar.size = 0.85f;
-			HandlingScrollBar.size = 0.72f;
-			BrakingScrollBar.size = 0.62f;
+			PowerScrollBar.fillAmount= 0.85f;
+			HandlingScrollBar.fillAmount = 0.72f;
+			BrakingScrollBar.fillAmount = 0.62f;
 		}
 		else if (counter == 9)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeNine.KeyData == "BikeNinePurcahsed" &&SplashScript. BikeNine.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_9")== 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1709,7 +1744,7 @@ public class MenuScript : MonoBehaviour
 			else
 			{
 				BikeSelectBtn.SetActive(false);
-				Bike9PriceText.SetActive(true);
+				//Bike9PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
@@ -1722,14 +1757,14 @@ public class MenuScript : MonoBehaviour
 			}
 		
 			MultiplayerBikecounter = 8;
-			PowerScrollBar.size = 0.85f;
-			HandlingScrollBar.size = 0.8f;
-			BrakingScrollBar.size = 0.7f;
+			PowerScrollBar.fillAmount = 0.85f;
+			HandlingScrollBar.fillAmount= 0.8f;
+			BrakingScrollBar.fillAmount = 0.7f;
 		}
 		else if (counter == 10)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeTen.KeyData == "BikeTenPurcahsed" && SplashScript.BikeTen.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_10")== 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1737,7 +1772,7 @@ public class MenuScript : MonoBehaviour
 			else
 			{
 				BikeSelectBtn.SetActive(false);
-				Bike10PriceText.SetActive(true);
+				//Bike10PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
@@ -1750,14 +1785,14 @@ public class MenuScript : MonoBehaviour
 			}
 			
 			MultiplayerBikecounter = 9;
-			PowerScrollBar.size = 0.9f;
-			HandlingScrollBar.size = 0.82f;
-			BrakingScrollBar.size = 0.75f;
+			PowerScrollBar.fillAmount = 0.9f;
+			HandlingScrollBar.fillAmount = 0.82f;
+			BrakingScrollBar.fillAmount = 0.75f;
 		}
 		else if (counter == 11)
 		{
 			BikeArrayDes = Object.Instantiate(BikeArray[counter - 1], Target.transform.position, Target.transform.rotation);
-			if (SplashScript.BikeEleven.KeyData == "BikeElevenPurcahsed" && SplashScript.BikeEleven.ValueData == 1)
+			if (PlayerPrefs.GetInt("bike_11")== 1)
 			{
 				BikeSelectBtn.SetActive(true);
 				CloseAllPricePanel();
@@ -1766,7 +1801,7 @@ public class MenuScript : MonoBehaviour
 			else
 			{
 				BikeSelectBtn.SetActive(false);
-				Bike11PriceText.SetActive(true);
+				//Bike11PriceText.SetActive(true);
 				Bike2PriceText.SetActive(false);
 				Bike3PriceText.SetActive(false);
 				Bike4PriceText.SetActive(false);
@@ -1780,9 +1815,9 @@ public class MenuScript : MonoBehaviour
 			}
 			
 			MultiplayerBikecounter = 10;
-			PowerScrollBar.size = 0.95f;
-			HandlingScrollBar.size = 0.85f;
-			BrakingScrollBar.size = 0.8f;
+			PowerScrollBar.fillAmount = 0.95f;
+			HandlingScrollBar.fillAmount = 0.85f;
+			BrakingScrollBar.fillAmount = 0.8f;
 		}
 	}
 
@@ -1815,6 +1850,6 @@ public class MenuScript : MonoBehaviour
 
 	public void LikeUS_Click_Btn()
 	{
-		Application.OpenURL("https://www.facebook.com/monstergamesproductions");
+		Application.OpenURL("");
 	}
 }

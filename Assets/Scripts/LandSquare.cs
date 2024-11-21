@@ -8,6 +8,7 @@ public class LandSquare : MonoBehaviour
 
 	private void Start()
 	{
+		SquareObect = GameObject.Find("Sphere");
 	}
 
 	private void Update()

@@ -4,7 +4,7 @@ public class TrainPanelDisable : MonoBehaviour
 {
 	private void OnEnable()
 	{
-		Invoke("ObjecDisable", 4.5f);
+		Invoke("ObjecDisable", 2f);
 	}
 
 	private void ObjecDisable()

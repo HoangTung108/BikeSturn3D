@@ -14,7 +14,10 @@ public class BikeRampAI : MonoBehaviour
 		if (other.gameObject.tag == "rampstop")
 		{
 			rampStop = true;
-			Debug.Log("Stop Trigger");
+			BikeControl.CanStart = false;
+			
 		}
+		
+		
 	}
 }

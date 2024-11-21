@@ -4,7 +4,7 @@ public class ShareAndr : MonoBehaviour
 {
 	private string subject = "Superhero Mega ramp Moto Rider: 3D GT Auto stunts";
 
-	private string body = "https://play.google.com/store/apps/details?id=com.monstergamesproductions.ramp.moto.rider";
+	private string body = "";
 
 	public void shareText()
 	{

@@ -1,31 +1,32 @@
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
 using UnityEngine.UI;
 
-public class INAPP : MonoBehaviour, IStoreListener
+public class INAPP : MonoBehaviour, IDetailedStoreListener
 {
 	private static IStoreController m_StoreController;
 
 	private static IExtensionProvider m_StoreExtensionProvider;
 
-	public static string NoAdsid = "com.monstergamesproductions.ramp.moto.rider.removeads";
+	public static string NoAdsid = "aaaaa.rider.removeads";
 
-	public static string StarterKit = "com.monstergamesproductions.ramp.moto.rider.starterkit";
+	public static string StarterKit = "aaaaa.rider.starterkit";
 
-	public static string CoinOfferPack = "com.monstergamesproductions.ramp.moto.rider.coin.offerpack";
+	public static string CoinOfferPack = "aaaaa.rider.coin.offerpack";
 
-	public static string DoubleCoins = "com.monstergamesproductions.ramp.moto.rider.doublecoins";
+	public static string DoubleCoins = "aaaaa.rider.doublecoins";
 
-	public static string UnlockAllLevels = "com.monstergamesproductions.ramp.moto.rider.unlocklevels";
+	public static string UnlockAllLevels = "aaaaa.rider.unlocklevels";
 
-	public static string UnlockAllBikes = "com.monstergamesproductions.ramp.moto.rider.unlockbikes";
+	public static string UnlockAllBikes = "aaaaa.rider.unlockbikes";
 
-	public static string CashSet1 = "com.monstergamesproductions.ramp.moto.rider.cashsetone";
+	public static string CashSet1 = "aaaaa.rider.cashsetone";
 
-	public static string CashSet2 = "com.monstergamesproductions.ramp.moto.rider.cashsettwo";
+	public static string CashSet2 = "aaaaa.rider.cashsettwo";
 
-	public static string CashSet3 = "com.monstergamesproductions.ramp.moto.rider.cashsetthree";
+	public static string CashSet3 = "aaaaa.rider.cashsetthree";
 
 	public Text NoAdsPriceText;
 
@@ -61,60 +62,60 @@ public class INAPP : MonoBehaviour, IStoreListener
 		}
 
 #if UNITY_EDITOR
-        PlayerPrefs.SetInt("FUnlockedLevel2", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel3", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel4", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel5", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel6", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel7", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel8", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel9", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel10", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel11", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel12", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel13", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel14", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel15", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel16", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel17", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel18", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel19", 1);
-        PlayerPrefs.SetInt("FUnlockedLevel20", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel2", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel3", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel4", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel5", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel6", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel7", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel8", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel9", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel10", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel11", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel12", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel13", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel14", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel15", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel16", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel17", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel18", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel19", 1);
-        PlayerPrefs.SetInt("TUnlockedLevel20", 1);
-        PlayerPrefs.SetInt("UnlockTimeModeDB", 1);
-        PlayerPrefs.SetInt("UnlockALLLevelsDB", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel2", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel3", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel4", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel5", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel6", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel7", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel8", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel9", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel10", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel11", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel12", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel13", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel14", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel15", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel16", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel17", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel18", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel19", 1);
+		PlayerPrefs.SetInt("FUnlockedLevel20", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel2", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel3", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel4", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel5", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel6", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel7", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel8", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel9", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel10", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel11", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel12", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel13", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel14", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel15", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel16", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel17", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel18", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel19", 1);
+		PlayerPrefs.SetInt("TUnlockedLevel20", 1);
+		PlayerPrefs.SetInt("UnlockTimeModeDB", 1);
+		PlayerPrefs.SetInt("UnlockALLLevelsDB", 1);
 
-        //BIKE
-        PlayerPrefs.SetInt("BikeTwoPurcahsed", 1);
-        PlayerPrefs.SetInt("BikeThreePurcahsed", 1);
-        PlayerPrefs.SetInt("BikeFourPurcahsed", 1);
-        PlayerPrefs.SetInt("BikeFivePurcahsed", 1);
-        PlayerPrefs.SetInt("BikeSixPurcahsed", 1);
-        PlayerPrefs.SetInt("BikeSevenPurcahsed", 1);
-        PlayerPrefs.SetInt("BikeEightPurcahsed", 1);
-        PlayerPrefs.SetInt("BikeNinePurcahsed", 1);
-        PlayerPrefs.SetInt("BikeTenPurcahsed", 1);
-        PlayerPrefs.SetInt("BikeElevenPurcahsed", 1);
+		//BIKE
+		PlayerPrefs.SetInt("BikeTwoPurcahsed", 1);
+		PlayerPrefs.SetInt("BikeThreePurcahsed", 1);
+		PlayerPrefs.SetInt("BikeFourPurcahsed", 1);
+		PlayerPrefs.SetInt("BikeFivePurcahsed", 1);
+		PlayerPrefs.SetInt("BikeSixPurcahsed", 1);
+		PlayerPrefs.SetInt("BikeSevenPurcahsed", 1);
+		PlayerPrefs.SetInt("BikeEightPurcahsed", 1);
+		PlayerPrefs.SetInt("BikeNinePurcahsed", 1);
+		PlayerPrefs.SetInt("BikeTenPurcahsed", 1);
+		PlayerPrefs.SetInt("BikeElevenPurcahsed", 1);
 #endif
-    }
+	}
 
 	public void InitializePurchasing()
 	{
@@ -381,4 +382,12 @@ public class INAPP : MonoBehaviour, IStoreListener
 	{
 		Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
 	}
+
+    public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
+    {
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error, string message)
+    {
+    }
 }

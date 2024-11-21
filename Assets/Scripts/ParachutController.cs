@@ -70,6 +70,7 @@ public class ParachutController : MonoBehaviour
 		ParachuteRight_Btn.SetActive(true);
 		ParachuteOpen_Btn.SetActive(false);
 		Invoke("ParcahuteIdle_Call", 2f);
+		AdsManager.Instance.UpdateBannerPosition(MaxSdkBase.BannerPosition.TopCenter);
 	}
 
 	private void ParcahuteIdle_Call()

@@ -90,21 +90,7 @@ public class AdsCallerManager : MonoBehaviour
 
 	private void Awake()
 	{
-		AdmobAppId = Android_AdmobAppId;
-		AdmobBannerAdId = Android_AdmobBannerAdId;
-		AdmobIntestritialAdId = Android_AdmobIntestritialAdId;
-		RewardedAdmobAdID = Android_RewardedAdmobAdID;
-		UnityAdId = Android_UnityAdId;
-		PlayerPrefs.SetInt("RewardWacthed", 0);
-		if (_instance == null)
-		{
-			_instance = this;
-			UnityEngine.Object.DontDestroyOnLoad(this);
-		}
-		else if (this != _instance)
-		{
-			UnityEngine.Object.Destroy(base.gameObject);
-		}
+		
 	}
 
 	public void Start()
@@ -118,44 +104,44 @@ public class AdsCallerManager : MonoBehaviour
 		//rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
 		//rewardBasedVideo.OnAdClosed += HandleRewardBasedVideoClosed;
 		//rewardBasedVideo.OnAdLeavingApplication += HandleRewardBasedVideoLeftApplication;
-		Advertisement.Initialize(UnityAdId, false);
-		RequestRewardBasedVideo();
-		if (SystemInfo.systemMemorySize > 1024 && PlayerPrefs.GetInt("NoAdsPurchase") == 0)
-		{
-			RequestInterstitial();
-		}
+		//Advertisement.Initialize(UnityAdId, false);
+		//RequestRewardBasedVideo();
+		//if (SystemInfo.systemMemorySize > 1024 && PlayerPrefs.GetInt("NoAdsPurchase") == 0)
+		//{
+		//	RequestInterstitial();
+		//}
 	}
 
 	public void Update()
 	{
-		if (SystemInfo.systemMemorySize > 1024 && PlayerPrefs.GetInt("NoAdsPurchase") == 0)
-		{
-			if (PlayerPrefs.GetInt("LoadAdCallDB") == 1)
-			{
-				LoadAdCall();
-				PlayerPrefs.SetInt("LoadAdCallDB", 0);
-			}
-			else if (PlayerPrefs.GetInt("PauseAdCallDB") == 1)
-			{
-				PauseAdCall();
-				PlayerPrefs.SetInt("PauseAdCallDB", 0);
-			}
-			else if (PlayerPrefs.GetInt("LvlCompleteAdCallDB") == 1)
-			{
-				LevelCompleteAdCall();
-				PlayerPrefs.SetInt("LvlCompleteAdCallDB", 0);
-			}
-			else if (PlayerPrefs.GetInt("LvlFailedAdCallDB") == 1)
-			{
-				LevelFailedAdCall();
-				PlayerPrefs.SetInt("LvlFailedAdCallDB", 0);
-			}
-		}
-		if (PlayerPrefs.GetInt("RewardAdCallDB") == 1)
-		{
-			RewardedAdShowMultiple();
-			PlayerPrefs.SetInt("RewardAdCallDB", 0);
-		}
+		//if (SystemInfo.systemMemorySize > 1024 && PlayerPrefs.GetInt("NoAdsPurchase") == 0)
+		//{
+		//	if (PlayerPrefs.GetInt("LoadAdCallDB") == 1)
+		//	{
+		//		LoadAdCall();
+		//		PlayerPrefs.SetInt("LoadAdCallDB", 0);
+		//	}
+		//	else if (PlayerPrefs.GetInt("PauseAdCallDB") == 1)
+		//	{
+		//		PauseAdCall();
+		//		PlayerPrefs.SetInt("PauseAdCallDB", 0);
+		//	}
+		//	else if (PlayerPrefs.GetInt("LvlCompleteAdCallDB") == 1)
+		//	{
+		//		LevelCompleteAdCall();
+		//		PlayerPrefs.SetInt("LvlCompleteAdCallDB", 0);
+		//	}
+		//	else if (PlayerPrefs.GetInt("LvlFailedAdCallDB") == 1)
+		//	{
+		//		LevelFailedAdCall();
+		//		PlayerPrefs.SetInt("LvlFailedAdCallDB", 0);
+		//	}
+		//}
+		//if (PlayerPrefs.GetInt("RewardAdCallDB") == 1)
+		//{
+		//	RewardedAdShowMultiple();
+		//	PlayerPrefs.SetInt("RewardAdCallDB", 0);
+		//}
 	}
 
 	public void IntestritialAdCall()
@@ -194,10 +180,10 @@ public class AdsCallerManager : MonoBehaviour
 	{
 		if (PlayerPrefs.GetInt("NoAdsPurchase") == 0)
 		{
-			if (Advertisement.IsReady("video"))
-			{
-				Advertisement.Show("video");
-			}
+			//if (Advertisement.IsReady("video"))
+			//{
+			//	Advertisement.Show("video");
+			//}
 			//else if (interstitial.IsLoaded())
 			//{
 			//	interstitial.Show();
@@ -236,80 +222,80 @@ public class AdsCallerManager : MonoBehaviour
 
 	public void ShowAd(string zone = "rewardedVideo")
 	{
-		ShowOptions showOptions = new ShowOptions();
-		showOptions.resultCallback = AdCallbackhandler;
-		if (Advertisement.IsReady(zone))
-		{
-			Advertisement.Show(zone, showOptions);
-			return;
-		}
-		if (Application.loadedLevel == 1)
-		{
-			VideoNotAvailbleMSG.SetActive(true);
-		}
-		else
-		{
-			PlayerPrefs.SetInt("RewardWacthed", 2);
-		}
-		Advertisement.Initialize(UnityAdId, false);
-		RequestRewardBasedVideo();
+		//ShowOptions showOptions = new ShowOptions();
+		//showOptions.resultCallback = AdCallbackhandler;
+		//if (Advertisement.IsReady(zone))
+		//{
+		//	Advertisement.Show(zone, showOptions);
+		//	return;
+		//}
+		//if (Application.loadedLevel == 1)
+		//{
+		//	VideoNotAvailbleMSG.SetActive(true);
+		//}
+		//else
+		//{
+		//	PlayerPrefs.SetInt("RewardWacthed", 2);
+		//}
+		//Advertisement.Initialize(UnityAdId, false);
+		//RequestRewardBasedVideo();
 	}
 
-	private void AdCallbackhandler(ShowResult result)
-	{
-		switch (result)
-		{
-		case ShowResult.Finished:
-			if (Application.loadedLevel == 1)
-			{
-				PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") + 300);
-				CashText.text = PlayerPrefs.GetInt("CashDB").ToString();
-			}
-			else
-			{
-				PlayerPrefs.SetInt("RewardWacthed", 1);
-			}
-			Advertisement.Initialize(UnityAdId, false);
-			RequestRewardBasedVideo();
-			break;
-		case ShowResult.Skipped:
-			Debug.Log("Ad skipped. Son, I am dissapointed in you");
-			if (Application.loadedLevel == 1)
-			{
-				VideoNotAvailbleMSG.SetActive(true);
-			}
-			else
-			{
-				PlayerPrefs.SetInt("RewardWacthed", 2);
-			}
-			break;
-		case ShowResult.Failed:
-			Debug.Log("I swear this has never happened to me before");
-			if (Application.loadedLevel == 1)
-			{
-				VideoNotAvailbleMSG.SetActive(true);
-			}
-			else
-			{
-				PlayerPrefs.SetInt("RewardWacthed", 2);
-			}
-			Advertisement.Initialize(UnityAdId, false);
-			RequestRewardBasedVideo();
-			break;
-		}
-	}
+	//private void AdCallbackhandler(ShowResult result)
+	//{
+	//	switch (result)
+	//	{
+	//	case ShowResult.Finished:
+	//		if (Application.loadedLevel == 1)
+	//		{
+	//			PlayerPrefs.SetInt("CashDB", PlayerPrefs.GetInt("CashDB") + 300);
+	//			CashText.text = PlayerPrefs.GetInt("CashDB").ToString();
+	//		}
+	//		else
+	//		{
+	//			PlayerPrefs.SetInt("RewardWacthed", 1);
+	//		}
+	//		Advertisement.Initialize(UnityAdId, false);
+	//		RequestRewardBasedVideo();
+	//		break;
+	//	case ShowResult.Skipped:
+	//		Debug.Log("Ad skipped. Son, I am dissapointed in you");
+	//		if (Application.loadedLevel == 1)
+	//		{
+	//			VideoNotAvailbleMSG.SetActive(true);
+	//		}
+	//		else
+	//		{
+	//			PlayerPrefs.SetInt("RewardWacthed", 2);
+	//		}
+	//		break;
+	//	case ShowResult.Failed:
+	//		Debug.Log("I swear this has never happened to me before");
+	//		if (Application.loadedLevel == 1)
+	//		{
+	//			VideoNotAvailbleMSG.SetActive(true);
+	//		}
+	//		else
+	//		{
+	//			PlayerPrefs.SetInt("RewardWacthed", 2);
+	//		}
+	//		Advertisement.Initialize(UnityAdId, false);
+	//		RequestRewardBasedVideo();
+	//		break;
+	//	}
+	//}
 
-	private IEnumerator WaitForAd()
-	{
-		float currentTimeScale = Time.timeScale;
-		Time.timeScale = 0f;
-		yield return null;
-		while (Advertisement.isShowing)
-		{
-			yield return null;
-		}
-		Time.timeScale = currentTimeScale;
-	}
+	//private IEnumerator WaitForAd()
+	//{
+	//	float currentTimeScale = Time.timeScale;
+	//	Time.timeScale = 0f;
+	//	yield return null;
+	//	while (Advertisement.isShowing)
+	//	{
+	//		yield return null;
+	//	}
+	//	Time.timeScale = currentTimeScale;
+	//}
 
 	//private AdRequest CreateAdRequest()
 	//{

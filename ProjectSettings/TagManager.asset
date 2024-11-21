@@ -34,6 +34,11 @@ TagManager:
   - BallShootTag
   - BikeFallStay
   - Ground
+  - point3
+  - CanStart
+  - CanStart2
+  - CanStart3
+  - rampStop1
   layers:
   - Default
   - TransparentFX

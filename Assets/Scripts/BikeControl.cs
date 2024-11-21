@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class BikeControl : MonoBehaviour
 {
@@ -152,7 +154,8 @@ public class BikeControl : MonoBehaviour
 
 		public float pos_y;
 	}
-
+	public static bool CanStart;
+	
 	private Vector3 velocity;
 
 	public bool rampStart;
@@ -164,6 +167,8 @@ public class BikeControl : MonoBehaviour
 	public bool BikeFallStayBool;
 
 	public int CheckpointCounter;
+
+	public bool triger3;
 
 	public ControlMode controlMode = ControlMode.simple;
 
@@ -880,6 +885,13 @@ public class BikeControl : MonoBehaviour
 		{
 			CheckpointCounter++;
 			other.gameObject.SetActive(false);
+			BikeUIController.CheckPoint.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Checkpoint " + CheckpointCounter.ToString();
+			BikeUIController.CheckPoint.transform.DOScale(new Vector3(1,1,1),0.5f);
+			Invoke("SetScale",2f);
+			/// Show ADs
+
+			Debug.Log("SHOW ADs");
+			/// 
 		}
 		if (other.gameObject.tag == "FinishCol")
 		{
@@ -891,12 +903,25 @@ public class BikeControl : MonoBehaviour
 		}
 		if (other.gameObject.tag == "rampstart")
 		{
-			rampStart = true;
-			Debug.Log("Start Trigger");
+			// rampStart = true;
+			PlayerPrefs.SetInt("Collider1", 1);
+			
+		}
+		if (other.gameObject.tag == "CanStart")
+		{
+			CanStart = true;
+			
 		}
 		if (other.gameObject.tag == "Junction")
 		{
-			junctionBool = true;
+			// junctionBool = true;
+			PlayerPrefs.SetInt("Collider2", 1);
+		
+		}
+		if (other.gameObject.tag == "point3")
+		{
+			// triger3 = true;
+			PlayerPrefs.SetInt("Collider3", 1);
 		}
 		if (other.gameObject.tag == "BikeFall")
 		{
@@ -907,7 +932,10 @@ public class BikeControl : MonoBehaviour
 			activeControl = false;
 			CityLevelComplete = true;
 		}
+	
 	}
+
+
 
 	private void OnCollisionEnter(Collider other)
 	{
@@ -947,5 +975,11 @@ public class BikeControl : MonoBehaviour
 		{
 			crash = true;
 		}
+	}
+
+	private void SetScale()
+	{
+		
+		BikeUIController.CheckPoint.transform.DOScale(new Vector3(0,0,0),0.5f);
 	}
 }

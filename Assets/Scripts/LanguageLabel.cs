@@ -15,10 +15,11 @@ public class LanguageLabel : MonoBehaviour
 
 	public string IndianText;
 
-	private void OnEnable()
+	private void Update()
 	{
 		if (PlayerPrefs.GetInt("LanguageSet") == 0)
 		{
+		
 			base.gameObject.GetComponent<Text>().text = EnglishText;
 		}
 		else if (PlayerPrefs.GetInt("LanguageSet") == 1)
